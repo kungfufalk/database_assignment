@@ -2,6 +2,7 @@
 -- Ygeiopolis General Hospital - Database Schema
 -- install.sql
 -- ============================================================
+USE ygeiopolis;
 
 SET FOREIGN_KEY_CHECKS = 0;
 SET SQL_MODE = 'STRICT_TRANS_TABLES,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO';
@@ -9,6 +10,8 @@ SET SQL_MODE = 'STRICT_TRANS_TABLES,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVIS
 -- ============================================================
 -- DROP TABLES (reverse dependency order)
 -- ============================================================
+SET FOREIGN_KEY_CHECKS = 0;
+
 DROP TABLE IF EXISTS entity_image;
 DROP TABLE IF EXISTS patient_review_doctor;
 DROP TABLE IF EXISTS patient_review_hospitalization;
@@ -35,8 +38,6 @@ DROP TABLE IF EXISTS nurse;
 DROP TABLE IF EXISTS doctor;
 DROP TABLE IF EXISTS staff;
 DROP TABLE IF EXISTS patient;
-
-SET FOREIGN_KEY_CHECKS = 1;
 
 -- ============================================================
 -- REFERENCE DATA TABLES
@@ -178,12 +179,10 @@ CREATE TABLE doctor (
     CONSTRAINT pk_doctor            PRIMARY KEY (amka),
     CONSTRAINT fk_doctor_staff      FOREIGN KEY (amka)            REFERENCES staff (amka)  ON DELETE CASCADE,
     CONSTRAINT fk_doctor_supervisor FOREIGN KEY (supervisor_amka) REFERENCES doctor (amka) ON DELETE SET NULL,
-    CONSTRAINT uq_doctor_license    UNIQUE (license_no),
-    -- Residents must have a supervisor; Directors must NOT
-    -- (enforced via trigger below; CHECK can't reference other rows)
-    CONSTRAINT chk_director_no_supervisor
-        CHECK (NOT (rank = 'Director' AND supervisor_amka IS NOT NULL))
+    CONSTRAINT uq_doctor_license    UNIQUE (license_no)
 );
+-- Residents must have a supervisor; Directors must NOT
+-- (enforced via triggers below)
 
 CREATE INDEX idx_doctor_specialty  ON doctor (specialty);
 CREATE INDEX idx_doctor_rank       ON doctor (rank);
@@ -493,6 +492,11 @@ CREATE TABLE entity_image (
 );
 
 CREATE INDEX idx_image_entity ON entity_image (entity_type, entity_id);
+
+-- ============================================================
+-- Re-enable foreign key checks
+-- ============================================================
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- ============================================================
 -- TRIGGERS
