@@ -46,7 +46,7 @@ def excel_to_csv(input_excel: str, output_csv: str, sheet_name: Optional[str | i
 	else:
 		if df.shape[1] < 3:
 			raise ValueError("Input sheet must contain at least three columns")
-		out_df = df.iloc[:, :3]
+		out_df = df.iloc[:, :df.shape[1]]
 
 	out_df.to_csv(output_csv, index=False)
 
