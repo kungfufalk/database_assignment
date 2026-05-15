@@ -23,6 +23,7 @@ to match the actual row counts in your loaded reference tables.
 
 import random
 import sys
+import mysql.connector
 from datetime import date, datetime, timedelta, time
 from faker import Faker
 
@@ -32,49 +33,61 @@ fake_en = Faker('en_US')
 random.seed(42)  # reproducible output
 
 # ============================================================
-# CONFIG
+# DATABASE CONNECTION CONFIG
+# ============================================================
+DB_CONFIG = {
+    "host": "127.0.0.1",      # Change to 'mariadb' if running inside docker
+    "port": 3306,             # The port mapped in your docker-compose
+    "user": "root",
+    "password": "your_password",
+    "database": "ygeiopolis"
+}
+
+def fetch_reference_data():
+    """Queries the database for existing reference codes."""
+    try:
+        conn = mysql.connector.connect(**DB_CONFIG)
+        cursor = conn.cursor()
+
+        print("Fetching reference data from database...")
+        
+        # 1. Fetch ICD10 Codes
+        cursor.execute("SELECT code FROM icd10_code")
+        icd10_codes = [row[0] for row in cursor.fetchall()]
+
+        # 2. Fetch KEN Codes (and their costs/los for logic)
+        cursor.execute("SELECT code, base_cost, mean_los_days FROM ken_code")
+        ken_codes = cursor.fetchall()
+
+        # 3. Fetch Procedure Catalog Codes
+        cursor.execute("SELECT code FROM procedure_catalog")
+        proc_codes = [row[0] for row in cursor.fetchall()]
+
+        # 4. Active Substances (for T5 allergy check)
+        cursor.execute("SELECT id FROM active_substance")
+        active_subtances = [row[0] for row in cursor.fetchall()]
+
+        # 5. Drug IDs
+        cursor.execute("SELECT id FROM drug")
+        drugs = [row[0] for row in cursor.fetchall()]
+
+        conn.close()
+        
+        if not icd10_codes or not ken_codes or not proc_codes or not active_subtances or not drugs:
+            raise ValueError("Reference tables are empty. Please fill them before running this script.")
+
+        return icd10_codes, ken_codes, proc_codes, active_subtances, drugs
+
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        sys.exit(1)
+
+# ============================================================
+# DATA GENERATION
 # ============================================================
 
-EMA_DRUG_COUNT = 1000
-EMA_SUBSTANCE_COUNT = 500
-
-ICD10_CODES = [
-    "I21.0", "I21.1", "I50.0", "I10",   "J18.9",
-    "J06.9", "K35.8", "K80.0", "N20.0", "S72.0",
-    "C18.9", "E11.9", "J44.1", "G35",   "M54.5",
-    "A09",   "F32.1", "N39.0", "K57.3", "I63.9",
-]
-
-KEN_CODES = [
-    ("112",  8500.00, 7.5),
-    ("127",  3200.00, 5.8),
-    ("143",  1800.00, 4.2),
-    ("175",  4100.00, 6.0),
-    ("179",  2200.00, 5.5),
-    ("190",  2400.00, 5.0),
-    ("202",  1600.00, 3.8),
-    ("239",  3800.00, 7.0),
-    ("243",  1400.00, 3.5),
-    ("254",  6200.00, 8.5),
-    ("290",  2100.00, 5.2),
-    ("311",  2800.00, 3.0),
-    ("320",  1700.00, 4.0),
-    ("359",  4500.00, 3.5),
-    ("371",  3100.00, 5.5),
-    ("383",  1500.00, 3.2),
-    ("394",  1900.00, 4.1),
-    ("410",  2600.00, 2.0),
-    ("430",  3400.00, 12.0),
-    ("468",  9000.00, 9.0),
-]
-
-PROCEDURE_CATALOG_CODES = [
-    "A01.01", "A01.02", "A02.01", "A02.02", "A02.03",
-    "A02.04", "A03.01", "A03.02", "A03.03", "A04.01",
-    "A04.02", "A05.01", "A05.02", "B01.01", "B01.02",
-    "B02.01", "B02.02", "B02.03", "B03.01", "B03.02",
-    "C01.01", "C01.02", "C02.01", "C02.02", "C03.01",
-]
+# Fetch data from DB
+ICD10_CODES, KEN_CODES, PROCEDURE_CATALOG_CODES, ACTIVE_SUBSTANCES, DRUGS = fetch_reference_data()
 
 # ============================================================
 # HELPERS
@@ -368,7 +381,7 @@ allergy_patients = random.sample(patients, 40)
 allergy_amkas = {p['amka'] for p in allergy_patients}
 for p in allergy_patients:
     num_allergies = random.randint(1, 3)
-    for sid in random.sample(range(1, EMA_SUBSTANCE_COUNT + 1), num_allergies):
+    for sid in random.sample(ACTIVE_SUBSTANCES, num_allergies):
         emit(f"INSERT IGNORE INTO patient_allergy (patient_amka, substance_id) "
              f"VALUES ({sql_str(p['amka'])}, {sid});")
 emit()
@@ -574,7 +587,7 @@ safe_hosps = [h for h in hosp_records if h['patient_amka'] not in allergy_amkas]
 
 for h in random.sample(safe_hosps, min(300, len(safe_hosps))):
     doc = random.choice(doctors)
-    drug_id = random.randint(1, EMA_DRUG_COUNT)
+    drug_id = int(random.sample(DRUGS, 1)[0])
     start = h['adm_date'] + timedelta(days=random.randint(0, 2))
     
     key = (doc['amka'], h['patient_amka'], drug_id, start)

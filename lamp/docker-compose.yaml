@@ -21,6 +21,8 @@ services:
     image: mariadb:lts
     environment:
       MYSQL_ROOT_PASSWORD: your_password
+    ports:
+      - "3306:3306"
     volumes:
       - mysqldata:/var/lib/mysql
       - ./init:/var/lib/mysql-files
