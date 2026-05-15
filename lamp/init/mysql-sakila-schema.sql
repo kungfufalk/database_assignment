@@ -26,6 +26,7 @@ DROP TABLE IF EXISTS operating_room;
 DROP TABLE IF EXISTS lab_test;
 DROP TABLE IF EXISTS hospitalization;
 DROP TABLE IF EXISTS triage;
+DROP TABLE IF EXISTS procedure_catalog;
 DROP TABLE IF EXISTS ken_code;
 DROP TABLE IF EXISTS icd10_code;
 DROP TABLE IF EXISTS shift_assignment;
