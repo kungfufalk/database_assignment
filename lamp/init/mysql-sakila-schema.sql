@@ -46,7 +46,6 @@ DROP TABLE IF EXISTS patient;
 CREATE TABLE icd10_code (
     code        VARCHAR(10)  NOT NULL,
     description VARCHAR(255) NOT NULL,
-    category    VARCHAR(10)  NOT NULL,  -- e.g. 'A00', 'I21'
     CONSTRAINT pk_icd10 PRIMARY KEY (code)
 );
 
@@ -377,21 +376,29 @@ CREATE TABLE operating_room (
 -- ============================================================
 -- MEDICAL PROCEDURE
 -- ============================================================
+-- Reference table (loaded once from the MoH file)
+CREATE TABLE procedure_catalog (
+    code        VARCHAR(50)  NOT NULL,
+    name        VARCHAR(255) NOT NULL,
+    category    VARCHAR(30)  NOT NULL CHECK (category IN ('Surgical','Diagnostic','Therapeutic')),
+    CONSTRAINT pk_procedure_catalog PRIMARY KEY (code)
+);
+
+-- Instance table (one row per actual procedure performed on a patient)
 CREATE TABLE medical_procedure (
-    id                  INT           NOT NULL AUTO_INCREMENT,
-    hospitalization_id  INT           NOT NULL,
-    code                VARCHAR(50)   NOT NULL,
-    name                VARCHAR(255)  NOT NULL,
-    category            VARCHAR(30)   NOT NULL CHECK (category IN ('Surgical', 'Diagnostic', 'Therapeutic')),
-    start_datetime      DATETIME      NOT NULL,
-    duration_minutes    INT           NOT NULL CHECK (duration_minutes > 0),
-    cost                DECIMAL(10,2) NOT NULL CHECK (cost >= 0),
-    operating_room_id   INT           NOT NULL,
-    primary_surgeon_amka CHAR(11)     NOT NULL,
-    CONSTRAINT pk_procedure       PRIMARY KEY (id),
-    CONSTRAINT fk_proc_hosp       FOREIGN KEY (hospitalization_id)  REFERENCES hospitalization (id)   ON DELETE CASCADE,
-    CONSTRAINT fk_proc_room       FOREIGN KEY (operating_room_id)   REFERENCES operating_room  (id)   ON DELETE RESTRICT,
-    CONSTRAINT fk_proc_surgeon    FOREIGN KEY (primary_surgeon_amka) REFERENCES doctor          (amka) ON DELETE RESTRICT
+    id                   INT           NOT NULL AUTO_INCREMENT,
+    catalog_code         VARCHAR(50)   NOT NULL,   -- FK to procedure_catalog
+    hospitalization_id   INT           NOT NULL,
+    start_datetime       DATETIME      NOT NULL,
+    duration_minutes     INT           NOT NULL CHECK (duration_minutes > 0),
+    cost                 DECIMAL(10,2) NOT NULL CHECK (cost >= 0),
+    operating_room_id    INT           NOT NULL,
+    primary_surgeon_amka CHAR(11)      NOT NULL,
+    CONSTRAINT pk_medical_procedure  PRIMARY KEY (id),
+    CONSTRAINT fk_proc_catalog       FOREIGN KEY (catalog_code)         REFERENCES procedure_catalog (code),
+    CONSTRAINT fk_proc_hosp          FOREIGN KEY (hospitalization_id)   REFERENCES hospitalization   (id),
+    CONSTRAINT fk_proc_room          FOREIGN KEY (operating_room_id)    REFERENCES operating_room    (id),
+    CONSTRAINT fk_proc_surgeon       FOREIGN KEY (primary_surgeon_amka) REFERENCES doctor            (amka)
 );
 
 CREATE INDEX idx_proc_hosp     ON medical_procedure (hospitalization_id);
