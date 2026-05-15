@@ -49,7 +49,6 @@ CREATE TABLE icd10_code (
     CONSTRAINT pk_icd10 PRIMARY KEY (code)
 );
 
-CREATE INDEX idx_icd10_category ON icd10_code (category);
 
 -- ---------------------------------------------------------------
 -- KEN (DRG) codes — Κλειστά Ενοποιημένα Νοσήλια
@@ -59,7 +58,6 @@ CREATE TABLE ken_code (
     description     VARCHAR(255)   NOT NULL,
     base_cost       DECIMAL(10,2)  NOT NULL CHECK (base_cost >= 0),
     mean_los_days   DECIMAL(6,2)   NOT NULL CHECK (mean_los_days > 0),  -- Mean Length of Stay
-    daily_surcharge DECIMAL(10,2)  NOT NULL CHECK (daily_surcharge >= 0),
     CONSTRAINT pk_ken PRIMARY KEY (code)
 );
 
@@ -402,7 +400,6 @@ CREATE TABLE operating_room (
 CREATE TABLE procedure_catalog (
     code        VARCHAR(50)  NOT NULL,
     name        VARCHAR(255) NOT NULL,
-    category    VARCHAR(30)  NOT NULL CHECK (category IN ('Surgical','Diagnostic','Therapeutic')),
     CONSTRAINT pk_procedure_catalog PRIMARY KEY (code)
 );
 
@@ -427,7 +424,6 @@ CREATE INDEX idx_proc_hosp     ON medical_procedure (hospitalization_id);
 CREATE INDEX idx_proc_surgeon  ON medical_procedure (primary_surgeon_amka);
 CREATE INDEX idx_proc_room     ON medical_procedure (operating_room_id);
 CREATE INDEX idx_proc_start    ON medical_procedure (start_datetime);
-CREATE INDEX idx_proc_category ON medical_procedure (category);
 
 -- Procedure assistants (doctors or nurses)
 CREATE TABLE procedure_staff (
