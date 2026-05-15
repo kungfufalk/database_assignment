@@ -67,33 +67,55 @@ CREATE TABLE ken_code (
 -- EMA Article 57 drugs
 -- ---------------------------------------------------------------
 CREATE TABLE drug (
-    id              INT            NOT NULL AUTO_INCREMENT,
-    product_name    VARCHAR(255)   NOT NULL,
-    ema_product_no  VARCHAR(100),
-    authorisation_no VARCHAR(100),
-    authorisation_status VARCHAR(50),
-    CONSTRAINT pk_drug PRIMARY KEY (id),
-    CONSTRAINT uq_drug_ema UNIQUE (ema_product_no)
+    id                                      INT            NOT NULL AUTO_INCREMENT,
+    product_name                            VARCHAR(255)   NOT NULL,
+    route_of_administration                 VARCHAR(255),
+    product_authorisation_country           VARCHAR(100),
+    marketing_authorisation_holder          VARCHAR(255),
+    pharmacovigilance_master_file_location  VARCHAR(255),
+    pharmacovigilance_email                 VARCHAR(255),
+    pharmacovigilance_phone                 VARCHAR(100),
+
+    CONSTRAINT pk_drug PRIMARY KEY (id)
 );
 
-CREATE INDEX idx_drug_name ON drug (product_name);
+CREATE INDEX idx_drug_name 
+    ON drug (product_name);
+
+CREATE INDEX idx_drug_country 
+    ON drug (product_authorisation_country);
 
 CREATE TABLE active_substance (
-    id      INT          NOT NULL AUTO_INCREMENT,
-    name    VARCHAR(255) NOT NULL,
+    id      INT            NOT NULL AUTO_INCREMENT,
+    name    VARCHAR(255)   NOT NULL,
+
     CONSTRAINT pk_active_substance PRIMARY KEY (id),
     CONSTRAINT uq_active_substance_name UNIQUE (name)
 );
 
-CREATE INDEX idx_substance_name ON active_substance (name);
+CREATE INDEX idx_substance_name 
+    ON active_substance (name);
 
 CREATE TABLE drug_active_substance (
-    drug_id      INT NOT NULL,
-    substance_id INT NOT NULL,
-    CONSTRAINT pk_drug_substance PRIMARY KEY (drug_id, substance_id),
-    CONSTRAINT fk_das_drug      FOREIGN KEY (drug_id)      REFERENCES drug (id)             ON DELETE CASCADE,
-    CONSTRAINT fk_das_substance FOREIGN KEY (substance_id) REFERENCES active_substance (id) ON DELETE CASCADE
+    drug_id        INT NOT NULL,
+    substance_id   INT NOT NULL,
+
+    CONSTRAINT pk_drug_substance 
+        PRIMARY KEY (drug_id, substance_id),
+
+    CONSTRAINT fk_das_drug
+        FOREIGN KEY (drug_id)
+        REFERENCES drug (id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_das_substance
+        FOREIGN KEY (substance_id)
+        REFERENCES active_substance (id)
+        ON DELETE CASCADE
 );
+
+CREATE INDEX idx_das_substance 
+    ON drug_active_substance (substance_id);
 
 -- ============================================================
 -- PATIENT
