@@ -516,10 +516,10 @@ for i in range(500):
     disc_date = min(adm_date + timedelta(days=actual_los), date(2025, 6, 30))
     surcharge = round(max(0, actual_los - ken[2]) * round(ken[1] / ken[2], 2), 2)
 
-    emit(f"INSERT INTO hospitalization (id, patient_amka, bed_id, department_id, triage_id, admission_date, discharge_date, admission_icd10, discharge_icd10, ken_code, base_cost, surcharge) "
+    emit(f"INSERT INTO hospitalization (id, patient_amka, bed_id, department_id, triage_id, admission_date, discharge_date, admission_icd10, discharge_icd10, ken_code) "
          f"VALUES ({hosp_id}, {sql_str(patient['amka'])}, {bed['id']}, {dept_id}, {'NULL' if triage_ref is None else triage_ref}, "
          f"{sql_date(adm_date)}, {sql_date(disc_date)}, {sql_str(random.choice(ICD10_CODES))}, {sql_str(random.choice(ICD10_CODES))}, "
-         f"{sql_str(ken[0])}, {ken[1]}, {surcharge});")
+         f"{sql_str(ken[0])});")
     hosp_records.append({'id': hosp_id, 'patient_amka': patient['amka'], 'dept_id': dept_id, 'adm_date': adm_date, 'disc_date': disc_date})
     hosp_id += 1
 emit()
