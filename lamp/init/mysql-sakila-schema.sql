@@ -92,8 +92,6 @@ CREATE TABLE active_substance (
     CONSTRAINT uq_active_substance_name UNIQUE (name)
 );
 
-CREATE INDEX idx_substance_name 
-    ON active_substance (name);
 
 CREATE TABLE drug_active_substance (
     drug_id        INT NOT NULL,
@@ -142,7 +140,7 @@ CREATE TABLE patient (
 );
 
 CREATE INDEX idx_patient_name ON patient (last_name, first_name);
-CREATE INDEX idx_patient_insurance ON patient (insurance);
+
 
 CREATE TABLE patient_allergy (
     patient_amka VARCHAR(11) NOT NULL,
@@ -169,8 +167,6 @@ CREATE TABLE staff (
     staff_type  VARCHAR(20)  NOT NULL CHECK (staff_type IN ('doctor', 'nurse', 'admin')),
     CONSTRAINT pk_staff PRIMARY KEY (amka)
 );
-
-CREATE INDEX idx_staff_type ON staff (staff_type);
 CREATE INDEX idx_staff_name ON staff (last_name, first_name);
 
 -- ============================================================
@@ -205,7 +201,6 @@ CREATE TABLE doctor (
 -- (enforced via triggers below)
 
 CREATE INDEX idx_doctor_specialty  ON doctor (specialty);
-CREATE INDEX idx_doctor_rank       ON doctor (rank);
 CREATE INDEX idx_doctor_supervisor ON doctor (supervisor_amka);
 
 -- Now add FK from department to doctor
@@ -234,7 +229,7 @@ CREATE TABLE nurse (
 );
 
 CREATE INDEX idx_nurse_dept ON nurse (department_id);
-CREATE INDEX idx_nurse_rank ON nurse (rank);
+
 
 -- ============================================================
 -- ADMIN STAFF
@@ -250,7 +245,7 @@ CREATE TABLE admin_staff (
 );
 
 CREATE INDEX idx_admin_dept ON admin_staff (department_id);
-CREATE INDEX idx_admin_role ON admin_staff (role);
+
 
 -- ============================================================
 -- BED
@@ -320,7 +315,6 @@ CREATE TABLE triage (
 );
 
 CREATE INDEX idx_triage_patient  ON triage (patient_amka);
-CREATE INDEX idx_triage_urgency  ON triage (urgency_level);
 CREATE INDEX idx_triage_arrival  ON triage (arrival_time);
 
 -- ============================================================

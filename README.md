@@ -158,6 +158,24 @@ Tackle them roughly in order of complexity:
 
 **Easier first:** Q2, Q3, Q5, Q8, Q11 — straightforward aggregations and filters.
 
+Q2: 
+SELECT d.amka,
+st.first_name,
+st.last_name,
+CASE WHEN COUNT(DISTINCT sh.id) > 0 THEN 'Yes' ELSE 'No' END AS had_oncall_this_year,
+COUNT(DISTINCT mp.id) AS lead_procedures_this_year
+FROM doctor d
+JOIN staff st ON st.amka = d.amka
+LEFT JOIN medical_procedure mp ON mp.primary_surgeon_amka = d.amka
+LEFT JOIN shift_assignment sa ON sa.staff_amka = d.amka
+LEFT JOIN shift sh ON sh.id = sa.shift_id AND sh.shift_type = 'Night' AND YEAR(sh.shift_date) = YEAR(CURDATE())
+WHERE d.specialty = 'Surgery'
+GROUP BY d.amka, st.first_name, st.last_name;
+
+
+Q3: 
+
+
 **Medium:** Q1 (multi-level grouping with CASE for cost breakdown), Q7, Q9, Q10 (self-join or window functions for pairs), Q12, Q15.
 
 **Harder:** Q13 (recursive CTE for supervision hierarchy), Q14 (self-join on year-over-year counts), Q4/Q6 (multi-join aggregations + EXPLAIN analysis).
@@ -197,3 +215,49 @@ Add indexes where queries need them. Justify each one. Typical candidates:
 ## Optional: Web UI (bonus 10 pts)
 
 A simple Flask/Node.js app with forms for common operations and a page to run/display each query result is enough to qualify. Not worth it if it eats too much time.
+
+## Indexes — Justifications
+
+Summary of indexes created in `lamp/init/mysql-sakila-schema.sql` and rationale for keeping or removing them:
+
+- `idx_drug_name`: Speeds lookups, ORDER/BY and pattern searches on `drug.product_name`.
+- `idx_drug_country`: Speeds filters and GROUPs by `product_authorisation_country`.
+- `idx_das_substance`: Speeds joins from `drug_active_substance` to `active_substance`.
+- `idx_patient_name`: Speeds lookup and sorting by `patient.last_name, patient.first_name`.
+- `idx_allergy_substance`: Speeds queries joining `patient_allergy` by `substance_id`.
+- `idx_staff_name`: Speeds lookups/sorts by staff name.
+- `idx_doctor_specialty`: Speeds finding doctors by specialty.
+- `idx_doctor_supervisor`: Speeds hierarchical queries and joins to a supervisor.
+- `idx_nurse_dept`: Speeds lookups of nurses by department.
+- `idx_admin_dept`: Speeds admin_staff → department lookups.
+- `idx_bed_dept`: Speeds joins/filters for beds per department.
+- `idx_bed_status`: Although low-cardinality, `status` is often queried (e.g., `Available`) so it's useful.
+- `idx_shift_date`: Supports date-range queries and scheduling views.
+- `idx_shift_dept`: Supports queries for shifts per department.
+- `idx_sa_staff`: Speeds finding assignments for a given staff member.
+- `idx_sa_shift`: Speeds finding staff assigned to a given shift.
+- `idx_triage_patient`: Speeds lookup of triage records for a patient.
+- `idx_triage_arrival`: Supports ordering and range queries on arrival times.
+- `idx_hosp_patient`: Frequent join/filter: hospitalizations per patient.
+- `idx_hosp_dept`: Hospitalizations per department queries.
+- `idx_hosp_admission`: Supports admission-date range queries and reporting.
+- `idx_hosp_discharge`: Supports discharge-date queries and reporting.
+- `idx_hosp_icd`: Queries by ICD-10 admission code for reporting/epidemiology.
+- `idx_hosp_ken`: Queries/grouping by KEN (DRG) code for costing/stats.
+- `idx_lt_hosp`: Lab tests → hospitalization joins.
+- `idx_lt_doctor`: Lab tests ordered by doctor.
+- `idx_lt_date`: Test-date range queries and reporting.
+- `idx_proc_hosp`: Procedures per hospitalization.
+- `idx_proc_surgeon`: Find procedures by surgeon.
+- `idx_proc_room`: Find procedures in a room for scheduling/conflict checks.
+- `idx_proc_start`: Range/order queries on procedure start times (used by scheduling/triggers).
+- `idx_presc_hosp`: Prescriptions linked to a hospitalization.
+- `idx_presc_patient`: Prescriptions per patient.
+- `idx_presc_doctor`: Prescriptions per doctor (audit/reporting).
+- `idx_presc_drug`: Find prescriptions by drug for pharmacovigilance/counts.
+- `idx_rev_hosp_hosp`: Reviews per hospitalization.
+- `idx_rev_hosp_patient`: Patient review lookups.
+- `idx_rev_doctor_doctor`: Reviews per doctor for rating reports.
+- `idx_rev_doctor_hosp`: Join from doctor-review to hospitalization.
+- `idx_image_entity`: Composite index `(entity_type, entity_id)` to quickly find images for an entity.
+
