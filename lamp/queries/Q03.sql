@@ -1,6 +1,5 @@
 SELECT 
     hospitalization_cost.patient_amka,
-    hospitalization_cost.department_id,
     -- Total patient costs
     SUM(
         CASE 
@@ -13,7 +12,6 @@ SELECT
     ) AS total_cost
 FROM (
     SELECT 
-        h.id,
         h.ken_code,
         h.patient_amka,
         h.department_id,
