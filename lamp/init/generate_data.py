@@ -636,7 +636,7 @@ emit()
 # ============================================================
 
 emit("SET FOREIGN_KEY_CHECKS = 1;")
-output_path = "generated_data.sql"
+output_path = "./generated_data.sql"
 with open(output_path, "w", encoding="utf-8") as f:
     f.write("\n".join(output_lines))
 
