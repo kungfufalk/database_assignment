@@ -1,3 +1,12 @@
+## Assumptions
+- the category of the IDC10-code is infront of the dot
+- the category of the KEN-code is the first latter of the code
+- we used the birthdate instead of age in patient table, so we dont have to change it every year
+- we left out the constraints on the staffed department shift, because it was to complicated to check -> unfortunately SQL does not allow aggregates on constraints -> in a real system this needs to be covered from the business logic, to make the data consistent
+- the serving queue (urgency level + FIFO) should not be handled by the database, but by the system which uses the database
+- the propotional additional daily charge in our case will be calculated by base cost divided by the days. This Information will be calculated from the business logic
+- we interpreted the query 9 the following way: find all patient and year combinations where: total hospitalization days exceed 15 and that total is shared by at least one other patient and year combination
+
 ## Query 4 analysation
 Output without force index:
 ``` json
