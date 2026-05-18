@@ -1,652 +1,105 @@
-+----------------------------------------------------+------------+------------+------------+--------------+-------------+
-| department                                         | shift_date | shift_type | staff_type | sub_category | staff_count |
-+----------------------------------------------------+------------+------------+------------+--------------+-------------+
-| Γαστρεντερολογική Κλινική                          | 2025-01-13 | Afternoon  | admin      | Accountant   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-13 | Afternoon  | admin      | Receptionist |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-13 | Afternoon  | admin      | Secretary    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-13 | Afternoon  | nurse      | Nurse        |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-13 | Morning    | admin      | Secretary    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-13 | Night      | admin      | IT Support   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-13 | Night      | admin      | Logistics    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-13 | Night      | admin      | Receptionist |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-13 | Night      | nurse      | Assistant    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-13 | Night      | nurse      | Nurse        |           6 |
-| Γυναικολογική Κλινική                              | 2025-01-13 | Night      | admin      | Accountant   |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-13 | Night      | admin      | IT Support   |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-13 | Night      | admin      | Secretary    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Afternoon  | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Afternoon  | admin      | Logistics    |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Afternoon  | doctor     | Gynecology   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Afternoon  | doctor     | Nephrology   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Afternoon  | doctor     | Surgery      |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Afternoon  | nurse      | Assistant    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Afternoon  | nurse      | Head_Nurse   |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Afternoon  | nurse      | Nurse        |           4 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Morning    | admin      | Logistics    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Morning    | admin      | Receptionist |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Morning    | doctor     | Neurology    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Morning    | doctor     | Psychiatry   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Morning    | nurse      | Assistant    |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Morning    | nurse      | Nurse        |           4 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Night      | admin      | Accountant   |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Night      | admin      | Logistics    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Night      | nurse      | Assistant    |           4 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Night      | nurse      | Head_Nurse   |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-13 | Night      | nurse      | Nurse        |           3 |
-| Νευρολογική Κλινική                                | 2025-01-13 | Afternoon  | admin      | HR Officer   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-13 | Afternoon  | admin      | IT Support   |           2 |
-| Νευρολογική Κλινική                                | 2025-01-13 | Afternoon  | nurse      | Assistant    |           3 |
-| Νευρολογική Κλινική                                | 2025-01-13 | Afternoon  | nurse      | Head_Nurse   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-13 | Afternoon  | nurse      | Nurse        |           5 |
-| Νευρολογική Κλινική                                | 2025-01-13 | Morning    | admin      | HR Officer   |           2 |
-| Νευρολογική Κλινική                                | 2025-01-13 | Morning    | nurse      | Nurse        |           5 |
-| Νευρολογική Κλινική                                | 2025-01-13 | Night      | admin      | HR Officer   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-13 | Night      | admin      | IT Support   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-13 | Night      | admin      | Logistics    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-13 | Night      | nurse      | Assistant    |           2 |
-| Νευρολογική Κλινική                                | 2025-01-13 | Night      | nurse      | Nurse        |           7 |
-| Νεφρολογική Κλινική                                | 2025-01-13 | Afternoon  | admin      | Accountant   |           2 |
-| Νεφρολογική Κλινική                                | 2025-01-13 | Afternoon  | admin      | Receptionist |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-13 | Night      | admin      | Accountant   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-13 | Night      | admin      | HR Officer   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-13 | Night      | admin      | Logistics    |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-13 | Night      | nurse      | Nurse        |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-13 | Afternoon  | admin      | Accountant   |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-13 | Afternoon  | admin      | Receptionist |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-13 | Afternoon  | nurse      | Assistant    |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-13 | Afternoon  | nurse      | Head_Nurse   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-13 | Afternoon  | nurse      | Nurse        |           4 |
-| Ογκολογική Κλινική                                 | 2025-01-13 | Morning    | admin      | Accountant   |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-13 | Morning    | admin      | HR Officer   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-13 | Night      | admin      | HR Officer   |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-13 | Night      | admin      | Receptionist |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-13 | Night      | nurse      | Head_Nurse   |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-13 | Night      | nurse      | Nurse        |           7 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Afternoon  | admin      | Accountant   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Afternoon  | admin      | Logistics    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Afternoon  | admin      | Receptionist |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Afternoon  | nurse      | Assistant    |           2 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Afternoon  | nurse      | Head_Nurse   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Afternoon  | nurse      | Nurse        |           6 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Morning    | admin      | HR Officer   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Morning    | admin      | IT Support   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Morning    | nurse      | Assistant    |           2 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Morning    | nurse      | Nurse        |           6 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Night      | admin      | HR Officer   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Night      | admin      | Logistics    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Night      | nurse      | Assistant    |           2 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Night      | nurse      | Head_Nurse   |           2 |
-| Ορθοπεδική Κλινική                                 | 2025-01-13 | Night      | nurse      | Nurse        |           2 |
-| Ουρολογική Κλινική                                 | 2025-01-13 | Afternoon  | admin      | HR Officer   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-13 | Night      | admin      | HR Officer   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-13 | Night      | admin      | Receptionist |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-13 | Night      | admin      | Secretary    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Afternoon  | admin      | IT Support   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Afternoon  | admin      | Logistics    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Afternoon  | admin      | Secretary    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Afternoon  | nurse      | Assistant    |           5 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Afternoon  | nurse      | Nurse        |           4 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Morning    | admin      | IT Support   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Morning    | admin      | Receptionist |           1 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Morning    | admin      | Secretary    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Morning    | nurse      | Assistant    |           2 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Morning    | nurse      | Head_Nurse   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Morning    | nurse      | Nurse        |           3 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Night      | admin      | Accountant   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Night      | admin      | Logistics    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Night      | admin      | Receptionist |           1 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Night      | nurse      | Assistant    |           3 |
-| Παθολογική Κλινική                                 | 2025-01-13 | Night      | nurse      | Nurse        |           6 |
-| Παιδιατρική Κλινική                                | 2025-01-13 | Night      | admin      | Accountant   |           1 |
-| Παιδιατρική Κλινική                                | 2025-01-13 | Night      | admin      | Receptionist |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-13 | Afternoon  | admin      | IT Support   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-13 | Afternoon  | admin      | Logistics    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-13 | Afternoon  | admin      | Receptionist |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-13 | Afternoon  | nurse      | Assistant    |           3 |
-| Πνευμονολογική Κλινική                             | 2025-01-13 | Afternoon  | nurse      | Nurse        |           4 |
-| Πνευμονολογική Κλινική                             | 2025-01-13 | Morning    | admin      | Receptionist |           2 |
-| Πνευμονολογική Κλινική                             | 2025-01-13 | Night      | admin      | HR Officer   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-13 | Night      | admin      | Receptionist |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-13 | Night      | nurse      | Assistant    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-13 | Night      | nurse      | Nurse        |           5 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Afternoon  | admin      | HR Officer   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Afternoon  | admin      | IT Support   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Afternoon  | admin      | Receptionist |           1 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Afternoon  | nurse      | Assistant    |           1 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Afternoon  | nurse      | Head_Nurse   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Afternoon  | nurse      | Nurse        |           7 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Morning    | admin      | Accountant   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Morning    | admin      | HR Officer   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Morning    | nurse      | Assistant    |           1 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Morning    | nurse      | Head_Nurse   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Morning    | nurse      | Nurse        |           4 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Night      | admin      | HR Officer   |           2 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Night      | nurse      | Assistant    |           3 |
-| Χειρουργική Κλινική                                | 2025-01-13 | Night      | nurse      | Nurse        |           4 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-14 | Afternoon  | admin      | Accountant   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-14 | Afternoon  | admin      | Secretary    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-14 | Afternoon  | nurse      | Nurse        |           3 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-14 | Night      | admin      | Accountant   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-14 | Night      | admin      | IT Support   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-14 | Night      | admin      | Secretary    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-14 | Night      | nurse      | Assistant    |           2 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-14 | Night      | nurse      | Nurse        |           4 |
-| Γυναικολογική Κλινική                              | 2025-01-14 | Afternoon  | admin      | Accountant   |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-14 | Afternoon  | admin      | HR Officer   |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-14 | Night      | admin      | HR Officer   |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-14 | Night      | admin      | Logistics    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Afternoon  | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Afternoon  | admin      | Logistics    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Afternoon  | nurse      | Assistant    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Afternoon  | nurse      | Head_Nurse   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Afternoon  | nurse      | Nurse        |           4 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Morning    | admin      | Receptionist |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Morning    | doctor     | Nephrology   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Morning    | nurse      | Head_Nurse   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Morning    | nurse      | Nurse        |           5 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Night      | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Night      | admin      | Logistics    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Night      | admin      | Receptionist |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Night      | nurse      | Assistant    |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Night      | nurse      | Head_Nurse   |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-14 | Night      | nurse      | Nurse        |           5 |
-| Μονάδα Εντατικής Θεραπείας                         | 2025-01-14 | Night      | admin      | IT Support   |           1 |
-| Μονάδα Εντατικής Θεραπείας                         | 2025-01-14 | Night      | admin      | Logistics    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Afternoon  | admin      | Accountant   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Afternoon  | admin      | HR Officer   |           2 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Afternoon  | nurse      | Head_Nurse   |           3 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Afternoon  | nurse      | Nurse        |           6 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Morning    | admin      | Accountant   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Morning    | admin      | IT Support   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Morning    | admin      | Logistics    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Morning    | nurse      | Assistant    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Morning    | nurse      | Nurse        |           5 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Night      | admin      | HR Officer   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Night      | admin      | Receptionist |           1 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Night      | nurse      | Assistant    |           3 |
-| Νευρολογική Κλινική                                | 2025-01-14 | Night      | nurse      | Nurse        |           3 |
-| Νεφρολογική Κλινική                                | 2025-01-14 | Afternoon  | admin      | HR Officer   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-14 | Afternoon  | admin      | Logistics    |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-14 | Night      | admin      | Accountant   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-14 | Night      | admin      | HR Officer   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-14 | Night      | admin      | IT Support   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-14 | Night      | nurse      | Assistant    |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-14 | Night      | nurse      | Head_Nurse   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-14 | Night      | nurse      | Nurse        |           5 |
-| Ογκολογική Κλινική                                 | 2025-01-14 | Afternoon  | admin      | Logistics    |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-14 | Afternoon  | admin      | Receptionist |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-14 | Afternoon  | nurse      | Assistant    |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-14 | Afternoon  | nurse      | Nurse        |           6 |
-| Ογκολογική Κλινική                                 | 2025-01-14 | Morning    | admin      | Accountant   |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-14 | Night      | admin      | HR Officer   |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-14 | Night      | nurse      | Assistant    |           3 |
-| Ογκολογική Κλινική                                 | 2025-01-14 | Night      | nurse      | Head_Nurse   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-14 | Night      | nurse      | Nurse        |           3 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Afternoon  | admin      | IT Support   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Afternoon  | admin      | Receptionist |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Afternoon  | nurse      | Assistant    |           3 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Afternoon  | nurse      | Nurse        |           3 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Morning    | admin      | Accountant   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Morning    | admin      | Receptionist |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Morning    | admin      | Secretary    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Morning    | nurse      | Assistant    |           2 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Morning    | nurse      | Head_Nurse   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Morning    | nurse      | Nurse        |           3 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Night      | admin      | IT Support   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Night      | admin      | Logistics    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Night      | admin      | Receptionist |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-14 | Night      | nurse      | Nurse        |           9 |
-| Ουρολογική Κλινική                                 | 2025-01-14 | Afternoon  | admin      | Logistics    |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-14 | Afternoon  | admin      | Receptionist |           2 |
-| Ουρολογική Κλινική                                 | 2025-01-14 | Night      | admin      | Accountant   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-14 | Night      | admin      | IT Support   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-14 | Night      | nurse      | Nurse        |           1 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Afternoon  | admin      | HR Officer   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Afternoon  | admin      | Receptionist |           1 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Afternoon  | nurse      | Assistant    |           3 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Afternoon  | nurse      | Nurse        |           4 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Morning    | admin      | HR Officer   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Morning    | admin      | Logistics    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Morning    | nurse      | Assistant    |           2 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Morning    | nurse      | Head_Nurse   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Morning    | nurse      | Nurse        |           5 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Night      | admin      | Accountant   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Night      | admin      | Receptionist |           1 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Night      | nurse      | Assistant    |           2 |
-| Παθολογική Κλινική                                 | 2025-01-14 | Night      | nurse      | Nurse        |           4 |
-| Παιδιατρική Κλινική                                | 2025-01-14 | Afternoon  | admin      | IT Support   |           1 |
-| Παιδιατρική Κλινική                                | 2025-01-14 | Night      | admin      | Accountant   |           2 |
-| Παιδιατρική Κλινική                                | 2025-01-14 | Night      | admin      | Logistics    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Afternoon  | admin      | Logistics    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Afternoon  | admin      | Receptionist |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Afternoon  | admin      | Secretary    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Afternoon  | nurse      | Assistant    |           4 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Afternoon  | nurse      | Head_Nurse   |           2 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Afternoon  | nurse      | Nurse        |           3 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Morning    | admin      | Accountant   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Morning    | admin      | IT Support   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Morning    | admin      | Logistics    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Night      | admin      | Accountant   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Night      | admin      | Logistics    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Night      | admin      | Receptionist |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Night      | nurse      | Assistant    |           2 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Night      | nurse      | Head_Nurse   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-14 | Night      | nurse      | Nurse        |           5 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Afternoon  | admin      | Accountant   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Afternoon  | admin      | HR Officer   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Afternoon  | nurse      | Assistant    |           2 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Afternoon  | nurse      | Nurse        |           5 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Morning    | admin      | HR Officer   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Morning    | admin      | IT Support   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Morning    | admin      | Receptionist |           1 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Morning    | nurse      | Assistant    |           3 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Morning    | nurse      | Nurse        |           6 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Night      | admin      | IT Support   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Night      | admin      | Secretary    |           1 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Night      | nurse      | Assistant    |           2 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Night      | nurse      | Head_Nurse   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-14 | Night      | nurse      | Nurse        |           3 |
-| Ψυχιατρική Κλινική                                 | 2025-01-14 | Night      | admin      | Accountant   |           1 |
-| Ψυχιατρική Κλινική                                 | 2025-01-14 | Night      | admin      | Receptionist |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-15 | Afternoon  | admin      | Logistics    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-15 | Afternoon  | admin      | Receptionist |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-15 | Night      | admin      | IT Support   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-15 | Night      | admin      | Receptionist |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-15 | Afternoon  | admin      | Accountant   |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-15 | Afternoon  | admin      | Logistics    |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-15 | Night      | admin      | Accountant   |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-15 | Night      | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Afternoon  | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Afternoon  | admin      | Secretary    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Afternoon  | nurse      | Assistant    |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Afternoon  | nurse      | Nurse        |           5 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Morning    | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Morning    | admin      | Receptionist |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Morning    | admin      | Secretary    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Morning    | nurse      | Assistant    |           4 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Morning    | nurse      | Nurse        |           3 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Night      | admin      | Accountant   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Night      | admin      | Logistics    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Night      | nurse      | Assistant    |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-15 | Night      | nurse      | Nurse        |           7 |
-| Μονάδα Εντατικής Θεραπείας                         | 2025-01-15 | Night      | admin      | HR Officer   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Afternoon  | admin      | IT Support   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Afternoon  | admin      | Receptionist |           2 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Afternoon  | nurse      | Assistant    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Afternoon  | nurse      | Head_Nurse   |           2 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Afternoon  | nurse      | Nurse        |           5 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Morning    | admin      | HR Officer   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Morning    | admin      | IT Support   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Morning    | admin      | Receptionist |           1 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Morning    | nurse      | Assistant    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Morning    | nurse      | Nurse        |           6 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Night      | admin      | Accountant   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Night      | admin      | HR Officer   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Night      | nurse      | Assistant    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-15 | Night      | nurse      | Nurse        |           6 |
-| Νεφρολογική Κλινική                                | 2025-01-15 | Afternoon  | admin      | Receptionist |           2 |
-| Νεφρολογική Κλινική                                | 2025-01-15 | Night      | admin      | Logistics    |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-15 | Night      | admin      | Receptionist |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-15 | Afternoon  | admin      | HR Officer   |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-15 | Afternoon  | nurse      | Assistant    |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-15 | Afternoon  | nurse      | Head_Nurse   |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-15 | Afternoon  | nurse      | Nurse        |           4 |
-| Ογκολογική Κλινική                                 | 2025-01-15 | Morning    | admin      | Accountant   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-15 | Morning    | admin      | HR Officer   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-15 | Morning    | admin      | Logistics    |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-15 | Morning    | nurse      | Nurse        |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-15 | Night      | admin      | Receptionist |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-15 | Night      | nurse      | Assistant    |           6 |
-| Ογκολογική Κλινική                                 | 2025-01-15 | Night      | nurse      | Nurse        |           3 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Afternoon  | admin      | Accountant   |           2 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Afternoon  | admin      | Secretary    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Afternoon  | nurse      | Assistant    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Afternoon  | nurse      | Nurse        |           5 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Morning    | admin      | Accountant   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Morning    | admin      | HR Officer   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Morning    | admin      | Receptionist |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Morning    | nurse      | Assistant    |           2 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Morning    | nurse      | Nurse        |           4 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Night      | admin      | Logistics    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Night      | admin      | Receptionist |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Night      | admin      | Secretary    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Night      | nurse      | Assistant    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Night      | nurse      | Head_Nurse   |           2 |
-| Ορθοπεδική Κλινική                                 | 2025-01-15 | Night      | nurse      | Nurse        |           4 |
-| Ουρολογική Κλινική                                 | 2025-01-15 | Afternoon  | admin      | Accountant   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-15 | Afternoon  | admin      | Logistics    |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-15 | Afternoon  | admin      | Receptionist |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-15 | Night      | admin      | HR Officer   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-15 | Night      | admin      | IT Support   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Afternoon  | admin      | Accountant   |           2 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Afternoon  | admin      | Logistics    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Afternoon  | nurse      | Assistant    |           2 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Afternoon  | nurse      | Nurse        |           5 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Morning    | admin      | HR Officer   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Morning    | admin      | IT Support   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Morning    | nurse      | Assistant    |           2 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Morning    | nurse      | Head_Nurse   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Morning    | nurse      | Nurse        |           4 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Night      | admin      | HR Officer   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Night      | admin      | Logistics    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Night      | nurse      | Assistant    |           2 |
-| Παθολογική Κλινική                                 | 2025-01-15 | Night      | nurse      | Nurse        |           5 |
-| Παιδιατρική Κλινική                                | 2025-01-15 | Afternoon  | admin      | Accountant   |           1 |
-| Παιδιατρική Κλινική                                | 2025-01-15 | Afternoon  | admin      | HR Officer   |           1 |
-| Παιδιατρική Κλινική                                | 2025-01-15 | Night      | admin      | Accountant   |           1 |
-| Παιδιατρική Κλινική                                | 2025-01-15 | Night      | admin      | IT Support   |           1 |
-| Παιδιατρική Κλινική                                | 2025-01-15 | Night      | admin      | Receptionist |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-15 | Afternoon  | admin      | IT Support   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-15 | Afternoon  | admin      | Secretary    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-15 | Night      | admin      | IT Support   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-15 | Night      | admin      | Logistics    |           2 |
-| Πνευμονολογική Κλινική                             | 2025-01-15 | Night      | nurse      | Nurse        |           2 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Afternoon  | admin      | Accountant   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Afternoon  | admin      | HR Officer   |           2 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Afternoon  | nurse      | Assistant    |           2 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Afternoon  | nurse      | Head_Nurse   |           2 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Afternoon  | nurse      | Nurse        |           3 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Morning    | admin      | HR Officer   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Morning    | admin      | Logistics    |           1 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Morning    | admin      | Receptionist |           1 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Morning    | nurse      | Assistant    |           3 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Morning    | nurse      | Head_Nurse   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Morning    | nurse      | Nurse        |           3 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Night      | admin      | IT Support   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Night      | admin      | Logistics    |           1 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Night      | nurse      | Assistant    |           2 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Night      | nurse      | Head_Nurse   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-15 | Night      | nurse      | Nurse        |           5 |
-| Ψυχιατρική Κλινική                                 | 2025-01-15 | Afternoon  | admin      | IT Support   |           1 |
-| Ψυχιατρική Κλινική                                 | 2025-01-15 | Night      | admin      | HR Officer   |           2 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-16 | Afternoon  | admin      | HR Officer   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-16 | Afternoon  | admin      | IT Support   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-16 | Afternoon  | admin      | Logistics    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-16 | Night      | admin      | Logistics    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-16 | Night      | admin      | Receptionist |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-16 | Afternoon  | admin      | Receptionist |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-16 | Night      | admin      | HR Officer   |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-16 | Night      | admin      | Receptionist |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Afternoon  | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Afternoon  | admin      | Receptionist |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Afternoon  | nurse      | Assistant    |           3 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Afternoon  | nurse      | Nurse        |           6 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Morning    | admin      | IT Support   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Morning    | admin      | Logistics    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Morning    | nurse      | Head_Nurse   |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Morning    | nurse      | Nurse        |           4 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Night      | admin      | IT Support   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Night      | admin      | Secretary    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Night      | nurse      | Assistant    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Night      | nurse      | Head_Nurse   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-16 | Night      | nurse      | Nurse        |           6 |
-| Νευρολογική Κλινική                                | 2025-01-16 | Afternoon  | admin      | Accountant   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-16 | Afternoon  | admin      | Logistics    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-16 | Afternoon  | admin      | Secretary    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-16 | Morning    | admin      | HR Officer   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-16 | Morning    | admin      | Receptionist |           1 |
-| Νευρολογική Κλινική                                | 2025-01-16 | Night      | admin      | Accountant   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-16 | Night      | admin      | Logistics    |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-16 | Afternoon  | admin      | Accountant   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-16 | Afternoon  | admin      | IT Support   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-16 | Night      | admin      | HR Officer   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-16 | Night      | admin      | IT Support   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-16 | Night      | admin      | Receptionist |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-16 | Afternoon  | admin      | HR Officer   |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-16 | Morning    | admin      | HR Officer   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-16 | Morning    | admin      | Secretary    |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-16 | Night      | admin      | Accountant   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-16 | Night      | admin      | HR Officer   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-16 | Night      | admin      | Logistics    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-16 | Afternoon  | admin      | Accountant   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-16 | Afternoon  | admin      | Logistics    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-16 | Afternoon  | admin      | Secretary    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-16 | Morning    | admin      | Accountant   |           2 |
-| Ορθοπεδική Κλινική                                 | 2025-01-16 | Morning    | admin      | Receptionist |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-16 | Night      | admin      | HR Officer   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-16 | Night      | admin      | Logistics    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-16 | Night      | admin      | Receptionist |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-16 | Afternoon  | admin      | Accountant   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-16 | Afternoon  | admin      | Receptionist |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-16 | Night      | admin      | Accountant   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-16 | Night      | admin      | Receptionist |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-16 | Night      | admin      | Secretary    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Afternoon  | admin      | Accountant   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Afternoon  | admin      | HR Officer   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Afternoon  | admin      | IT Support   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Afternoon  | nurse      | Assistant    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Afternoon  | nurse      | Head_Nurse   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Afternoon  | nurse      | Nurse        |           6 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Morning    | admin      | HR Officer   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Morning    | admin      | Logistics    |           2 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Morning    | nurse      | Nurse        |           1 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Night      | admin      | Accountant   |           2 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Night      | admin      | Logistics    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Night      | nurse      | Assistant    |           2 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Night      | nurse      | Head_Nurse   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-16 | Night      | nurse      | Nurse        |           3 |
-| Παιδιατρική Κλινική                                | 2025-01-16 | Night      | admin      | IT Support   |           2 |
-| Παιδιατρική Κλινική                                | 2025-01-16 | Night      | admin      | Receptionist |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-16 | Afternoon  | admin      | HR Officer   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-16 | Afternoon  | admin      | IT Support   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-16 | Afternoon  | admin      | Logistics    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-16 | Morning    | admin      | IT Support   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-16 | Morning    | admin      | Logistics    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-16 | Morning    | admin      | Receptionist |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-16 | Night      | admin      | Logistics    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-16 | Night      | admin      | Receptionist |           1 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Afternoon  | admin      | Accountant   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Afternoon  | admin      | HR Officer   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Afternoon  | nurse      | Assistant    |           3 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Afternoon  | nurse      | Head_Nurse   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Afternoon  | nurse      | Nurse        |           5 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Morning    | admin      | Accountant   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Morning    | admin      | Receptionist |           1 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Morning    | nurse      | Assistant    |           2 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Morning    | nurse      | Head_Nurse   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Morning    | nurse      | Nurse        |           5 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Night      | admin      | HR Officer   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Night      | admin      | Receptionist |           1 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Night      | nurse      | Assistant    |           2 |
-| Χειρουργική Κλινική                                | 2025-01-16 | Night      | nurse      | Nurse        |           5 |
-| Ψυχιατρική Κλινική                                 | 2025-01-16 | Night      | admin      | Accountant   |           1 |
-| Ψυχιατρική Κλινική                                 | 2025-01-16 | Night      | admin      | HR Officer   |           1 |
-| Ψυχιατρική Κλινική                                 | 2025-01-16 | Night      | admin      | Logistics    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-17 | Afternoon  | admin      | Accountant   |           2 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-17 | Afternoon  | admin      | IT Support   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-17 | Morning    | admin      | IT Support   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-17 | Night      | admin      | HR Officer   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-17 | Night      | admin      | Receptionist |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-17 | Afternoon  | admin      | Accountant   |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-17 | Night      | admin      | HR Officer   |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-17 | Night      | admin      | IT Support   |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-17 | Night      | admin      | Logistics    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Afternoon  | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Afternoon  | admin      | Receptionist |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Afternoon  | nurse      | Assistant    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Afternoon  | nurse      | Head_Nurse   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Afternoon  | nurse      | Nurse        |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Morning    | admin      | Accountant   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Morning    | admin      | Logistics    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Morning    | admin      | Receptionist |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Morning    | nurse      | Assistant    |           3 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Morning    | nurse      | Nurse        |           6 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Night      | admin      | Accountant   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Night      | admin      | Receptionist |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-17 | Night      | nurse      | Assistant    |           2 |
-| Μονάδα Εντατικής Θεραπείας                         | 2025-01-17 | Night      | admin      | IT Support   |           1 |
-| Μονάδα Εντατικής Θεραπείας                         | 2025-01-17 | Night      | admin      | Receptionist |           1 |
-| Μονάδα Εντατικής Θεραπείας                         | 2025-01-17 | Night      | admin      | Secretary    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-17 | Afternoon  | admin      | Logistics    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-17 | Afternoon  | admin      | Secretary    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-17 | Morning    | admin      | HR Officer   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-17 | Morning    | admin      | IT Support   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-17 | Night      | admin      | HR Officer   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-17 | Night      | admin      | Logistics    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-17 | Night      | admin      | Receptionist |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-17 | Afternoon  | admin      | Logistics    |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-17 | Afternoon  | admin      | Receptionist |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-17 | Night      | admin      | HR Officer   |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-17 | Afternoon  | admin      | IT Support   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-17 | Afternoon  | admin      | Receptionist |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-17 | Morning    | admin      | IT Support   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-17 | Morning    | admin      | Receptionist |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-17 | Night      | admin      | HR Officer   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-17 | Night      | admin      | Logistics    |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-17 | Night      | admin      | Receptionist |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-17 | Afternoon  | admin      | Accountant   |           2 |
-| Ορθοπεδική Κλινική                                 | 2025-01-17 | Morning    | admin      | HR Officer   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-17 | Morning    | admin      | Logistics    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-17 | Night      | admin      | Accountant   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-17 | Night      | admin      | HR Officer   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-17 | Night      | admin      | Receptionist |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-17 | Afternoon  | admin      | HR Officer   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-17 | Afternoon  | admin      | Secretary    |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-17 | Night      | admin      | HR Officer   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-17 | Night      | admin      | IT Support   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-17 | Night      | admin      | Logistics    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-17 | Afternoon  | admin      | Accountant   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-17 | Afternoon  | admin      | Receptionist |           1 |
-| Παθολογική Κλινική                                 | 2025-01-17 | Morning    | admin      | Accountant   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-17 | Morning    | admin      | Logistics    |           2 |
-| Παθολογική Κλινική                                 | 2025-01-17 | Night      | admin      | HR Officer   |           2 |
-| Παθολογική Κλινική                                 | 2025-01-17 | Night      | admin      | IT Support   |           1 |
-| Παιδιατρική Κλινική                                | 2025-01-17 | Night      | admin      | HR Officer   |           1 |
-| Παιδιατρική Κλινική                                | 2025-01-17 | Night      | admin      | Logistics    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-17 | Afternoon  | admin      | Logistics    |           2 |
-| Πνευμονολογική Κλινική                             | 2025-01-17 | Afternoon  | admin      | Receptionist |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-17 | Morning    | admin      | HR Officer   |           2 |
-| Πνευμονολογική Κλινική                             | 2025-01-17 | Morning    | admin      | Secretary    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-17 | Night      | admin      | Accountant   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-17 | Night      | admin      | IT Support   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-17 | Afternoon  | admin      | Accountant   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-17 | Afternoon  | admin      | IT Support   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-17 | Afternoon  | admin      | Logistics    |           1 |
-| Χειρουργική Κλινική                                | 2025-01-17 | Morning    | admin      | HR Officer   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-17 | Morning    | admin      | IT Support   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-17 | Morning    | admin      | Receptionist |           1 |
-| Χειρουργική Κλινική                                | 2025-01-17 | Night      | admin      | Accountant   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-17 | Night      | admin      | Secretary    |           1 |
-| Ψυχιατρική Κλινική                                 | 2025-01-17 | Night      | admin      | Accountant   |           1 |
-| Ψυχιατρική Κλινική                                 | 2025-01-17 | Night      | admin      | Logistics    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-18 | Afternoon  | admin      | HR Officer   |           2 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-18 | Afternoon  | admin      | Receptionist |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-18 | Morning    | admin      | Receptionist |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-18 | Morning    | admin      | Secretary    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-18 | Night      | admin      | IT Support   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-18 | Night      | admin      | Logistics    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-18 | Night      | admin      | Receptionist |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-18 | Afternoon  | admin      | HR Officer   |           1 |
-| Γυναικολογική Κλινική                              | 2025-01-18 | Afternoon  | admin      | Logistics    |           2 |
-| Γυναικολογική Κλινική                              | 2025-01-18 | Night      | admin      | Accountant   |           2 |
-| Γυναικολογική Κλινική                              | 2025-01-18 | Night      | admin      | Receptionist |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-18 | Afternoon  | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-18 | Afternoon  | admin      | IT Support   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-18 | Afternoon  | admin      | Receptionist |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-18 | Morning    | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-18 | Morning    | admin      | IT Support   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-18 | Morning    | admin      | Logistics    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-18 | Morning    | nurse      | Nurse        |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-18 | Night      | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-18 | Night      | admin      | Logistics    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-18 | Afternoon  | admin      | Receptionist |           2 |
-| Νευρολογική Κλινική                                | 2025-01-18 | Morning    | admin      | Accountant   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-18 | Morning    | admin      | Logistics    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-18 | Night      | admin      | HR Officer   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-18 | Night      | admin      | IT Support   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-18 | Afternoon  | admin      | IT Support   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-18 | Afternoon  | admin      | Secretary    |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-18 | Night      | admin      | Accountant   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-18 | Night      | admin      | Logistics    |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-18 | Night      | admin      | Secretary    |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-18 | Afternoon  | admin      | Accountant   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-18 | Afternoon  | admin      | IT Support   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-18 | Morning    | admin      | Accountant   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-18 | Morning    | admin      | Receptionist |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-18 | Night      | admin      | Accountant   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-18 | Night      | admin      | IT Support   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-18 | Night      | admin      | Secretary    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-18 | Afternoon  | admin      | Accountant   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-18 | Afternoon  | admin      | Logistics    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-18 | Morning    | admin      | Accountant   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-18 | Morning    | admin      | Receptionist |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-18 | Morning    | admin      | Secretary    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-18 | Night      | admin      | Logistics    |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-18 | Night      | admin      | Receptionist |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-18 | Afternoon  | admin      | HR Officer   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-18 | Afternoon  | admin      | Logistics    |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-18 | Night      | admin      | HR Officer   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-18 | Night      | admin      | IT Support   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-18 | Night      | admin      | Receptionist |           1 |
-| Παθολογική Κλινική                                 | 2025-01-18 | Afternoon  | admin      | Accountant   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-18 | Afternoon  | admin      | HR Officer   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-18 | Morning    | admin      | Accountant   |           2 |
-| Παθολογική Κλινική                                 | 2025-01-18 | Night      | admin      | Logistics    |           1 |
-| Παθολογική Κλινική                                 | 2025-01-18 | Night      | admin      | Receptionist |           1 |
-| Παιδιατρική Κλινική                                | 2025-01-18 | Afternoon  | admin      | Receptionist |           1 |
-| Παιδιατρική Κλινική                                | 2025-01-18 | Night      | admin      | Accountant   |           2 |
-| Πνευμονολογική Κλινική                             | 2025-01-18 | Afternoon  | admin      | Logistics    |           2 |
-| Πνευμονολογική Κλινική                             | 2025-01-18 | Morning    | admin      | Accountant   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-18 | Morning    | admin      | Logistics    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-18 | Night      | admin      | Accountant   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-18 | Night      | admin      | HR Officer   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-18 | Afternoon  | admin      | HR Officer   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-18 | Afternoon  | admin      | Receptionist |           2 |
-| Χειρουργική Κλινική                                | 2025-01-18 | Morning    | admin      | Accountant   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-18 | Morning    | admin      | IT Support   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-18 | Morning    | admin      | Receptionist |           1 |
-| Χειρουργική Κλινική                                | 2025-01-18 | Night      | admin      | HR Officer   |           2 |
-| Ψυχιατρική Κλινική                                 | 2025-01-18 | Night      | admin      | Accountant   |           1 |
-| Ψυχιατρική Κλινική                                 | 2025-01-18 | Night      | admin      | Secretary    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-19 | Afternoon  | admin      | Accountant   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-19 | Afternoon  | admin      | IT Support   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-19 | Afternoon  | admin      | Secretary    |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-19 | Night      | admin      | IT Support   |           1 |
-| Γαστρεντερολογική Κλινική                          | 2025-01-19 | Night      | admin      | Logistics    |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-19 | Afternoon  | admin      | Accountant   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-19 | Afternoon  | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-19 | Afternoon  | admin      | IT Support   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-19 | Morning    | admin      | Logistics    |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-19 | Morning    | admin      | Receptionist |           2 |
-| Καρδιολογική Κλινική                               | 2025-01-19 | Night      | admin      | HR Officer   |           1 |
-| Καρδιολογική Κλινική                               | 2025-01-19 | Night      | admin      | IT Support   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-19 | Afternoon  | admin      | HR Officer   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-19 | Afternoon  | admin      | Logistics    |           1 |
-| Νευρολογική Κλινική                                | 2025-01-19 | Morning    | admin      | HR Officer   |           1 |
-| Νευρολογική Κλινική                                | 2025-01-19 | Morning    | admin      | Receptionist |           1 |
-| Νευρολογική Κλινική                                | 2025-01-19 | Night      | admin      | HR Officer   |           2 |
-| Νευρολογική Κλινική                                | 2025-01-19 | Night      | admin      | Receptionist |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-19 | Afternoon  | admin      | HR Officer   |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-19 | Afternoon  | admin      | Secretary    |           1 |
-| Νεφρολογική Κλινική                                | 2025-01-19 | Night      | admin      | Receptionist |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-19 | Afternoon  | admin      | Logistics    |           2 |
-| Ογκολογική Κλινική                                 | 2025-01-19 | Morning    | admin      | IT Support   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-19 | Morning    | admin      | Logistics    |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-19 | Night      | admin      | HR Officer   |           1 |
-| Ογκολογική Κλινική                                 | 2025-01-19 | Night      | admin      | Receptionist |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-19 | Afternoon  | admin      | Receptionist |           2 |
-| Ορθοπεδική Κλινική                                 | 2025-01-19 | Morning    | admin      | Accountant   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-19 | Morning    | admin      | HR Officer   |           1 |
-| Ορθοπεδική Κλινική                                 | 2025-01-19 | Night      | admin      | Accountant   |           2 |
-| Ουρολογική Κλινική                                 | 2025-01-19 | Night      | admin      | Accountant   |           1 |
-| Ουρολογική Κλινική                                 | 2025-01-19 | Night      | admin      | Receptionist |           1 |
-| Παθολογική Κλινική                                 | 2025-01-19 | Afternoon  | admin      | HR Officer   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-19 | Afternoon  | admin      | IT Support   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-19 | Morning    | admin      | HR Officer   |           1 |
-| Παθολογική Κλινική                                 | 2025-01-19 | Morning    | admin      | Receptionist |           1 |
-| Παθολογική Κλινική                                 | 2025-01-19 | Night      | admin      | Accountant   |           2 |
-| Παθολογική Κλινική                                 | 2025-01-19 | Night      | admin      | Secretary    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-19 | Afternoon  | admin      | Accountant   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-19 | Afternoon  | admin      | Receptionist |           2 |
-| Πνευμονολογική Κλινική                             | 2025-01-19 | Morning    | admin      | IT Support   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-19 | Morning    | admin      | Logistics    |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-19 | Night      | admin      | Accountant   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-19 | Night      | admin      | IT Support   |           1 |
-| Πνευμονολογική Κλινική                             | 2025-01-19 | Night      | admin      | Logistics    |           1 |
-| Χειρουργική Κλινική                                | 2025-01-19 | Afternoon  | admin      | Logistics    |           2 |
-| Χειρουργική Κλινική                                | 2025-01-19 | Morning    | admin      | Accountant   |           2 |
-| Χειρουργική Κλινική                                | 2025-01-19 | Morning    | admin      | Logistics    |           1 |
-| Χειρουργική Κλινική                                | 2025-01-19 | Night      | admin      | HR Officer   |           1 |
-| Χειρουργική Κλινική                                | 2025-01-19 | Night      | admin      | Logistics    |           1 |
-+----------------------------------------------------+------------+------------+------------+--------------+-------------+
-647 rows in set (0.018 sec)
+Only the first 100 results...
++---------------------------------------------------+------------+------------+------------+--------------------+--------------------------+
+| department_name                                   | shift_date | shift_type | staff_type | personnel_subclass | total_personnel_required |
++---------------------------------------------------+------------+------------+------------+--------------------+--------------------------+
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Afternoon  | admin      | Secretary          |                        3 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Afternoon  | doctor     | Pediatrics         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Afternoon  | doctor     | Psychiatry         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Afternoon  | doctor     | Pulmonology        |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Afternoon  | doctor     | Radiology          |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Morning    | admin      | HR Officer         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Morning    | admin      | IT Support         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Night      | admin      | Receptionist       |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Night      | doctor     | Gastroenterology   |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Night      | doctor     | Internal Medicine  |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Night      | doctor     | Psychiatry         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Night      | doctor     | Urology            |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Night      | nurse      | Assistant          |                        3 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-06 | Night      | nurse      | Nurse              |                        6 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Afternoon  | admin      | Logistics          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Afternoon  | admin      | Receptionist       |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Afternoon  | admin      | Secretary          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Afternoon  | doctor     | Anesthesiology     |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Afternoon  | doctor     | Cardiology         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Afternoon  | doctor     | Oncology           |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Afternoon  | doctor     | Pediatrics         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Afternoon  | nurse      | Assistant          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Afternoon  | nurse      | Head_Nurse         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Afternoon  | nurse      | Nurse              |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Morning    | admin      | IT Support         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Night      | admin      | IT Support         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Night      | admin      | Logistics          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Night      | admin      | Receptionist       |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Night      | doctor     | Anesthesiology     |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Night      | doctor     | Nephrology         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Night      | doctor     | Orthopedics        |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Night      | doctor     | Pulmonology        |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Night      | nurse      | Assistant          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Night      | nurse      | Head_Nurse         |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-07 | Night      | nurse      | Nurse              |                        6 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Afternoon  | admin      | Accountant         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Afternoon  | admin      | HR Officer         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Afternoon  | admin      | Receptionist       |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Afternoon  | doctor     | Anesthesiology     |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Afternoon  | doctor     | Internal Medicine  |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Afternoon  | doctor     | Orthopedics        |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Morning    | admin      | IT Support         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Morning    | admin      | Logistics          |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Night      | admin      | Receptionist       |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Night      | admin      | Secretary          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Night      | doctor     | Gastroenterology   |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Night      | doctor     | Oncology           |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Night      | doctor     | Psychiatry         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Night      | nurse      | Assistant          |                        5 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Night      | nurse      | Head_Nurse         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-08 | Night      | nurse      | Nurse              |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Afternoon  | admin      | HR Officer         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Afternoon  | admin      | Logistics          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Afternoon  | admin      | Secretary          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Afternoon  | doctor     | Gynecology         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Afternoon  | doctor     | Oncology           |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Afternoon  | doctor     | Urology            |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Night      | admin      | HR Officer         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Night      | admin      | Receptionist       |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Night      | doctor     | Anesthesiology     |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Night      | doctor     | Internal Medicine  |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Night      | doctor     | Psychiatry         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Night      | doctor     | Pulmonology        |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Night      | nurse      | Assistant          |                        4 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-09 | Night      | nurse      | Nurse              |                        5 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Afternoon  | admin      | Receptionist       |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Afternoon  | admin      | Secretary          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Afternoon  | doctor     | Anesthesiology     |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Afternoon  | doctor     | Gastroenterology   |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Afternoon  | doctor     | Gynecology         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Afternoon  | doctor     | Psychiatry         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Afternoon  | doctor     | Pulmonology        |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Morning    | admin      | Accountant         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Night      | admin      | HR Officer         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Night      | admin      | Logistics          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Night      | doctor     | Anesthesiology     |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Night      | doctor     | Oncology           |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Night      | doctor     | Orthopedics        |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Night      | nurse      | Assistant          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-10 | Night      | nurse      | Nurse              |                        8 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-11 | Afternoon  | admin      | Receptionist       |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-11 | Afternoon  | admin      | Secretary          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-11 | Afternoon  | doctor     | Anesthesiology     |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-11 | Afternoon  | doctor     | Gastroenterology   |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-11 | Afternoon  | doctor     | Pediatrics         |                        2 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-11 | Afternoon  | doctor     | Pulmonology        |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-11 | Night      | admin      | Receptionist       |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-11 | Night      | admin      | Secretary          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-11 | Night      | doctor     | Orthopedics        |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-11 | Night      | doctor     | Psychiatry         |                        3 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-11 | Night      | nurse      | Assistant          |                        3 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-11 | Night      | nurse      | Nurse              |                        4 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-12 | Afternoon  | admin      | Accountant         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-12 | Afternoon  | admin      | IT Support         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-12 | Afternoon  | nurse      | Assistant          |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-12 | Afternoon  | nurse      | Head_Nurse         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-12 | Afternoon  | nurse      | Nurse              |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-12 | Night      | admin      | Accountant         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-12 | Night      | admin      | HR Officer         |                        1 |
+| Γαστρεντερολογική Κλινική                         | 2025-01-12 | Night      | nurse      | Assistant          |                        3 |
++---------------------------------------------------+------------+------------+------------+--------------------+--------------------------+

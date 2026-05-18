@@ -1,38 +1,30 @@
 SELECT
-    d.name AS department,
-    sh.shift_date,
-    sh.shift_type,
-    s.staff_type,
-    CASE s.staff_type
-        WHEN 'doctor' THEN doc.specialty
-        WHEN 'nurse' THEN n.rank
-        WHEN 'admin' THEN a.role
-    END AS sub_category,
-    COUNT(sa.id) AS staff_count
+    d.name AS department_name,
+    s.shift_date,
+    s.shift_type,
+    st.staff_type,
+    CASE
+        WHEN st.staff_type = 'doctor' THEN doc.specialty
+        WHEN st.staff_type = 'nurse' THEN n.rank
+        WHEN st.staff_type = 'admin' THEN a.role
+        ELSE 'Other'
+    END AS personnel_subclass,
+    COUNT(sa.staff_amka) AS total_personnel_required
 FROM
-    shift sh
-    JOIN department d ON d.id = sh.department_id
-    JOIN shift_assignment sa ON sa.shift_id = sh.id
-    JOIN staff s ON s.amka = sa.staff_amka
-    LEFT JOIN doctor doc ON doc.amka = s.amka
-    LEFT JOIN nurse n ON n.amka = s.amka
-    LEFT JOIN admin_staff a ON a.amka = s.amka
+    shift s
+    JOIN department d ON s.department_id = d.id
+    JOIN shift_assignment sa ON s.id = sa.shift_id
+    JOIN staff st ON sa.staff_amka = st.amka
+    LEFT JOIN doctor doc ON st.amka = doc.amka
+    LEFT JOIN nurse n ON st.amka = n.amka
+    LEFT JOIN admin_staff a ON st.amka = a.amka
 WHERE
-    sh.shift_date BETWEEN '2025-01-13' AND '2025-01-19'
+    s.shift_date BETWEEN '2025-01-06' AND '2025-01-12'
 GROUP BY
-    d.id,
     d.name,
-    sh.shift_date,
-    sh.shift_type,
-    s.staff_type,
-    CASE s.staff_type
-        WHEN 'doctor' THEN doc.specialty
-        WHEN 'nurse' THEN n.rank
-        WHEN 'admin' THEN a.role
-    END
-ORDER BY
-    sh.shift_date,
-    d.name,
-    sh.shift_type,
-    s.staff_type,
-    sub_category;
+    s.shift_date,
+    s.shift_type,
+    st.staff_type,
+    personnel_subclass
+LIMIT
+    100;

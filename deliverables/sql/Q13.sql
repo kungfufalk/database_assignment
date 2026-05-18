@@ -1,48 +1,45 @@
 WITH RECURSIVE
-    supervision_chain AS (
+    supervision_path AS (
+        -- Anchor Member: Start with the top-level Directors (no supervisor)
         SELECT
             d.amka AS doctor_amka,
-            d.amka AS current_amka,
-            d.supervisor_amka AS supervisor_amka,
-            d.rank AS current_rank,
-            0 AS level,
-            CAST(d.amka AS CHAR(1000)) AS path
-        FROM
-            doctor d
-        UNION ALL
-        SELECT
-            sc.doctor_amka,
-            d.amka,
             d.supervisor_amka,
             d.rank,
-            sc.level + 1,
-            CONCAT (sc.path, ' -> ', d.amka)
+            CAST(
+                CONCAT (st.first_name, ' ', st.last_name) AS CHAR(1000)
+            ) AS hierarchy_path,
+            1 AS hierarchy_level
         FROM
-            supervision_chain sc
-            JOIN doctor d ON d.amka = sc.supervisor_amka
+            doctor d
+            JOIN staff st ON d.amka = st.amka
         WHERE
-            sc.supervisor_amka IS NOT NULL
+            d.supervisor_amka IS NULL
+        UNION ALL
+        -- Recursive Member: Join remaining doctors to their supervisors already in the CTE
+        SELECT
+            e.amka AS doctor_amka,
+            e.supervisor_amka,
+            e.rank,
+            CONCAT (
+                s.hierarchy_path,
+                ' -> ',
+                st_e.first_name,
+                ' ',
+                st_e.last_name
+            ) AS hierarchy_path,
+            s.hierarchy_level + 1 AS hierarchy_level
+        FROM
+            doctor e
+            JOIN staff st_e ON e.amka = st_e.amka
+            INNER JOIN supervision_path s ON e.supervisor_amka = s.doctor_amka
     )
 SELECT
-    s_doc.first_name AS doctor_first_name,
-    s_doc.last_name AS doctor_last_name,
-    d_doc.rank AS doctor_rank,
-    d_doc.specialty AS doctor_specialty,
-    sc.level AS hierarchy_level,
-    s_sup.first_name AS supervisor_first_name,
-    s_sup.last_name AS supervisor_last_name,
-    d_sup.rank AS supervisor_rank,
-    d_sup.specialty AS supervisor_specialty,
-    sc.path AS full_chain
+    doctor_amka,
+    rank AS doctor_rank,
+    hierarchy_level,
+    hierarchy_path
 FROM
-    supervision_chain sc
-    JOIN doctor d_doc ON d_doc.amka = sc.doctor_amka
-    JOIN staff s_doc ON s_doc.amka = sc.doctor_amka
-    JOIN doctor d_sup ON d_sup.amka = sc.current_amka
-    JOIN staff s_sup ON s_sup.amka = sc.current_amka
-WHERE
-    sc.level > 0
+    supervision_path
 ORDER BY
-    s_doc.last_name,
-    s_doc.first_name,
-    sc.level;
+    hierarchy_level,
+    hierarchy_path;
