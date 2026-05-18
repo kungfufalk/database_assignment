@@ -7,12 +7,12 @@ SELECT
     icd_dis.description AS discharge_diagnosis,
     ROUND(
         kc.base_cost + CASE
-            WHEN DATEDIFF(
-                IFNULL(h.discharge_date, CURDATE()),
+            WHEN DATEDIFF (
+                IFNULL (h.discharge_date, CURDATE ()),
                 h.admission_date
             ) > kc.mean_los_days THEN (
-                DATEDIFF(
-                    IFNULL(h.discharge_date, CURDATE()),
+                DATEDIFF (
+                    IFNULL (h.discharge_date, CURDATE ()),
                     h.admission_date
                 ) - kc.mean_los_days
             ) * (kc.base_cost / kc.mean_los_days)
