@@ -261,3 +261,362 @@ Summary of indexes created in `lamp/init/mysql-sakila-schema.sql` and rationale 
 - `idx_rev_doctor_hosp`: Join from doctor-review to hospitalization.
 - `idx_image_entity`: Composite index `(entity_type, entity_id)` to quickly find images for an entity.
 
+# Q6 Analysis
+## a) Analyze output 
+```json 
+{
+  "query_optimization": {
+    "r_total_time_ms": 0.216812163
+  },
+  "query_block": {
+    "select_id": 1,
+    "cost": 0.033108,
+    "r_loops": 1,
+    "r_total_time_ms": 0.125738637,
+    "nested_loop": [
+      {
+        "table": {
+          "table_name": "h",
+          "access_type": "ref",
+          "possible_keys": [
+            "idx_hosp_patient",
+            "idx_hosp_dept",
+            "idx_hosp_icd",
+            "idx_hosp_ken"
+          ],
+          "key": "idx_hosp_patient",
+          "key_length": "44",
+          "used_key_parts": ["patient_amka"],
+          "ref": ["const"],
+          "loops": 1,
+          "r_loops": 1,
+          "rows": 3,
+          "r_index_rows": 3,
+          "r_rows": 3,
+          "cost": 0.00708384,
+          "r_table_time_ms": 0.02582617,
+          "r_other_time_ms": 0.009721439,
+          "r_engine_stats": {
+            "pages_accessed": 8
+          },
+          "filtered": 100,
+          "r_total_filtered": 100,
+          "index_condition": "h.patient_amka = '00545228015'",
+          "r_icp_filtered": 100,
+          "attached_condition": "h.patient_amka <=> '00545228015'",
+          "r_filtered": 100
+        }
+      },
+      {
+        "table": {
+          "table_name": "d",
+          "access_type": "eq_ref",
+          "possible_keys": ["PRIMARY"],
+          "key": "PRIMARY",
+          "key_length": "4",
+          "used_key_parts": ["id"],
+          "ref": ["ygeiopolis.h.department_id"],
+          "loops": 3,
+          "r_loops": 3,
+          "rows": 1,
+          "r_rows": 1,
+          "cost": 0.00350252,
+          "r_table_time_ms": 0.006723385,
+          "r_other_time_ms": 0.003170717,
+          "r_engine_stats": {
+            "pages_accessed": 3
+          },
+          "filtered": 100,
+          "r_total_filtered": 100,
+          "r_filtered": 100
+        }
+      },
+      {
+        "table": {
+          "table_name": "kc",
+          "access_type": "eq_ref",
+          "possible_keys": ["PRIMARY"],
+          "key": "PRIMARY",
+          "key_length": "42",
+          "used_key_parts": ["code"],
+          "ref": ["ygeiopolis.h.ken_code"],
+          "loops": 3,
+          "r_loops": 3,
+          "rows": 1,
+          "r_rows": 1,
+          "cost": 0.00514092,
+          "r_table_time_ms": 0.013152022,
+          "r_other_time_ms": 0.001798135,
+          "r_engine_stats": {
+            "pages_accessed": 7
+          },
+          "filtered": 100,
+          "r_total_filtered": 100,
+          "r_filtered": 100
+        }
+      },
+      {
+        "table": {
+          "table_name": "icd_adm",
+          "access_type": "eq_ref",
+          "possible_keys": ["PRIMARY"],
+          "key": "PRIMARY",
+          "key_length": "42",
+          "used_key_parts": ["code"],
+          "ref": ["ygeiopolis.h.admission_icd10"],
+          "loops": 3,
+          "r_loops": 3,
+          "rows": 1,
+          "r_rows": 1,
+          "cost": 0.00514092,
+          "r_table_time_ms": 0.010701606,
+          "r_other_time_ms": 0.002364957,
+          "r_engine_stats": {
+            "pages_accessed": 6
+          },
+          "filtered": 100,
+          "r_total_filtered": 100,
+          "r_filtered": 100
+        }
+      },
+      {
+        "table": {
+          "table_name": "icd_dis",
+          "access_type": "eq_ref",
+          "possible_keys": ["PRIMARY"],
+          "key": "PRIMARY",
+          "key_length": "42",
+          "used_key_parts": ["code"],
+          "ref": ["ygeiopolis.h.discharge_icd10"],
+          "loops": 3,
+          "r_loops": 3,
+          "rows": 1,
+          "r_rows": 1,
+          "cost": 0.00514092,
+          "r_table_time_ms": 0.009051717,
+          "r_other_time_ms": 0.003128859,
+          "r_engine_stats": {
+            "pages_accessed": 6
+          },
+          "filtered": 100,
+          "r_total_filtered": 100,
+          "attached_condition": "trigcond(trigcond(h.discharge_icd10 is not null))",
+          "r_filtered": 100
+        }
+      },
+      {
+        "table": {
+          "table_name": "prh",
+          "access_type": "ref",
+          "possible_keys": ["uq_rev_hosp", "idx_rev_hosp_hosp"],
+          "key": "uq_rev_hosp",
+          "key_length": "4",
+          "used_key_parts": ["hospitalization_id"],
+          "ref": ["ygeiopolis.h.id"],
+          "loops": 3,
+          "r_loops": 3,
+          "rows": 1,
+          "r_rows": 0.666666667,
+          "cost": 0.00709888,
+          "r_table_time_ms": 0.011043443,
+          "r_other_time_ms": 0.023775145,
+          "r_engine_stats": {
+            "pages_accessed": 5
+          },
+          "filtered": 100,
+          "r_total_filtered": 100,
+          "r_filtered": 100
+        }
+      }
+    ]
+  }
+}
+```
+
+
+With FORCE INDEX (idx_hosp_dept)
+
+```json 
+{
+  "query_optimization": {
+    "r_total_time_ms": 0.678509021
+  },
+  "query_block": {
+    "select_id": 1,
+    "cost": 3.254048857,
+    "r_loops": 1,
+    "r_total_time_ms": 1.720397819,
+    "filesort": {
+      "sort_key": "h.`id`",
+      "r_loops": 1,
+      "r_total_time_ms": 0.013833081,
+      "r_used_priority_queue": false,
+      "r_output_rows": 3,
+      "r_buffer_size": "304",
+      "r_sort_mode": "sort_key,rowid",
+      "temporary_table": {
+        "nested_loop": [
+          {
+            "table": {
+              "table_name": "d",
+              "access_type": "index",
+              "possible_keys": ["PRIMARY"],
+              "key": "uq_department_name",
+              "key_length": "402",
+              "used_key_parts": ["name"],
+              "loops": 1,
+              "r_loops": 1,
+              "rows": 15,
+              "r_rows": 15,
+              "cost": 0.008846195,
+              "r_table_time_ms": 0.033606897,
+              "r_other_time_ms": 0.021077943,
+              "r_engine_stats": {
+                "pages_accessed": 1
+              },
+              "filtered": 100,
+              "r_total_filtered": 100,
+              "r_filtered": 100,
+              "using_index": true
+            }
+          },
+          {
+            "table": {
+              "table_name": "h",
+              "access_type": "ref",
+              "possible_keys": ["idx_hosp_dept"],
+              "key": "idx_hosp_dept",
+              "key_length": "4",
+              "used_key_parts": ["department_id"],
+              "ref": ["ygeiopolis.d.id"],
+              "loops": 15,
+              "r_loops": 15,
+              "rows": 33,
+              "r_rows": 33.33333333,
+              "cost": 0.5082496,
+              "r_table_time_ms": 1.32556943,
+              "r_other_time_ms": 0.114060353,
+              "r_engine_stats": {
+                "pages_accessed": 1015
+              },
+              "filtered": 100,
+              "r_total_filtered": 0.6,
+              "attached_condition": "h.patient_amka = '00545228015'",
+              "r_filtered": 0.6
+            }
+          },
+          {
+            "table": {
+              "table_name": "kc",
+              "access_type": "eq_ref",
+              "possible_keys": ["PRIMARY"],
+              "key": "PRIMARY",
+              "key_length": "42",
+              "used_key_parts": ["code"],
+              "ref": ["ygeiopolis.h.ken_code"],
+              "loops": 495,
+              "r_loops": 3,
+              "rows": 1,
+              "r_rows": 1,
+              "cost": 0.4673238,
+              "r_table_time_ms": 0.027847546,
+              "r_other_time_ms": 0.006951858,
+              "r_engine_stats": {
+                "pages_accessed": 7
+              },
+              "filtered": 100,
+              "r_total_filtered": 100,
+              "r_filtered": 100
+            }
+          },
+          {
+            "table": {
+              "table_name": "icd_adm",
+              "access_type": "eq_ref",
+              "possible_keys": ["PRIMARY"],
+              "key": "PRIMARY",
+              "key_length": "42",
+              "used_key_parts": ["code"],
+              "ref": ["ygeiopolis.h.admission_icd10"],
+              "loops": 495,
+              "r_loops": 3,
+              "rows": 1,
+              "r_rows": 1,
+              "cost": 0.5222102,
+              "r_table_time_ms": 0.021683571,
+              "r_other_time_ms": 0.005591048,
+              "r_engine_stats": {
+                "pages_accessed": 6
+              },
+              "filtered": 100,
+              "r_total_filtered": 100,
+              "r_filtered": 100
+            }
+          },
+          {
+            "table": {
+              "table_name": "icd_dis",
+              "access_type": "eq_ref",
+              "possible_keys": ["PRIMARY"],
+              "key": "PRIMARY",
+              "key_length": "42",
+              "used_key_parts": ["code"],
+              "ref": ["ygeiopolis.h.discharge_icd10"],
+              "loops": 495,
+              "r_loops": 3,
+              "rows": 1,
+              "r_rows": 1,
+              "cost": 0.5222102,
+              "r_table_time_ms": 0.016294834,
+              "r_other_time_ms": 0.007381335,
+              "r_engine_stats": {
+                "pages_accessed": 6
+              },
+              "filtered": 100,
+              "r_total_filtered": 100,
+              "attached_condition": "trigcond(trigcond(h.discharge_icd10 is not null))",
+              "r_filtered": 100
+            }
+          },
+          {
+            "table": {
+              "table_name": "prh",
+              "access_type": "ref",
+              "possible_keys": ["uq_rev_hosp", "idx_rev_hosp_hosp"],
+              "key": "uq_rev_hosp",
+              "key_length": "4",
+              "used_key_parts": ["hospitalization_id"],
+              "ref": ["ygeiopolis.h.id"],
+              "loops": 495,
+              "r_loops": 3,
+              "rows": 1,
+              "r_rows": 0.666666667,
+              "cost": 0.9026176,
+              "r_table_time_ms": 0.022092991,
+              "r_other_time_ms": 0.071121816,
+              "r_engine_stats": {
+                "pages_accessed": 5
+              },
+              "filtered": 100,
+              "r_total_filtered": 100,
+              "r_filtered": 100
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+## C) Comparison of estimated cost and actual execution time
+
+- **Estimated cost:** 0.033108 → 3.254049 (≈ 98× increase).
+- **Actual total time (top-level):** 0.2168 ms → 0.6785 ms (≈ 3.1× slower).
+- **Query-block time:** 0.1257 ms → 1.7204 ms (≈ 13.7× slower).
+
+## D) Short analysis
+
+- Forcing `idx_hosp_dept` pushed the optimizer onto a low-selectivity access path, dramatically increasing scanned rows, page accesses and causing a temporary filesort.
+- The planner's cost estimate rose by about two orders of magnitude and the measured execution times increased substantially, validating the optimizer's warning.
+- Conclusion: do not force `idx_hosp_dept` for this query; allow the optimizer to use `idx_hosp_patient` or introduce a more appropriate composite index if needed.
