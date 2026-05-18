@@ -19,8 +19,7 @@ FROM
     LEFT JOIN nurse n ON st.amka = n.amka
     LEFT JOIN admin_staff a ON st.amka = a.amka
 WHERE
-    s.shift_date BETWEEN '2025-01-06'
-    AND '2025-01-12'
+    s.shift_date BETWEEN '2025-01-06' AND '2025-01-12'
 GROUP BY
     d.name,
     s.shift_date,

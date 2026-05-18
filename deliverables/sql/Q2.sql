@@ -14,7 +14,7 @@ FROM
     LEFT JOIN shift_assignment sa ON sa.staff_amka = d.amka
     LEFT JOIN shift sh ON sh.id = sa.shift_id
     AND sh.shift_type = 'Night'
-    AND YEAR(sh.shift_date) = YEAR(CURDATE()) -1
+    AND YEAR (sh.shift_date) = YEAR (CURDATE ()) -1
 WHERE
     d.specialty = 'Surgery'
 GROUP BY

@@ -3,7 +3,7 @@ SELECT
     COUNT(*) AS total_cases,
     ROUND(
         AVG(
-            TIMESTAMPDIFF(MINUTE, t.arrival_time, t.service_time)
+            TIMESTAMPDIFF (MINUTE, t.arrival_time, t.service_time)
         ),
         1
     ) AS avg_wait_min,
@@ -18,8 +18,8 @@ SELECT
         2
     ) AS admission_pct,
     COALESCE(
-        GROUP_CONCAT(
-            DISTINCT CONCAT(
+        GROUP_CONCAT (
+            DISTINCT CONCAT (
                 d.name,
                 ': ',
                 (

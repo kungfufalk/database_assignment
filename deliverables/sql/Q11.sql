@@ -1,17 +1,18 @@
-WITH t AS (
-    SELECT
-        d.amka,
-        COUNT(DISTINCT md.id) AS nr_procedures
-    FROM
-        doctor d
-        JOIN procedure_staff ps ON d.amka = ps.staff_amka
-        JOIN medical_procedure md ON ps.procedure_id = md.id
-        OR d.amka = md.primary_surgeon_amka
-    WHERE
-        YEAR(md.start_datetime) = YEAR(CURRENT_DATE()) - 2 -- Two years ago
-    GROUP BY
-        d.amka
-)
+WITH
+    t AS (
+        SELECT
+            d.amka,
+            COUNT(DISTINCT md.id) AS nr_procedures
+        FROM
+            doctor d
+            JOIN procedure_staff ps ON d.amka = ps.staff_amka
+            JOIN medical_procedure md ON ps.procedure_id = md.id
+            OR d.amka = md.primary_surgeon_amka
+        WHERE
+            YEAR (md.start_datetime) = YEAR (CURRENT_DATE()) - 2
+        GROUP BY
+            d.amka
+    )
 SELECT
     t.amka,
     s.first_name,
