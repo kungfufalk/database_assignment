@@ -1,1 +1,0 @@
-docker compose exec mariadb bash -c "mariadb -uroot -pyour_password ygeiopolis  < /var/lib/mysql-files/mysql-sakila-schema.sql"
