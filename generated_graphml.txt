@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+         http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+
+  <!-- Node attributes -->
+  <key id="d0" for="node" attr.name="table" attr.type="string"/>
+  <key id="d1" for="node" attr.name="columns" attr.type="string"/>
+
+  <!-- Edge attributes -->
+  <key id="d2" for="edge" attr.name="relationship" attr.type="string"/>
+
+  <graph id="YgeiopolisHospitalSchema" edgedefault="directed">
+
+    <!-- ===================================================== -->
+    <!-- TABLE NODES -->
+    <!-- ===================================================== -->
+
+    <node id="icd10_code">
+      <data key="d0">icd10_code</data>
+      <data key="d1">code (PK), description</data>
+    </node>
+
+    <node id="ken_code">
+      <data key="d0">ken_code</data>
+      <data key="d1">code (PK), description, base_cost, mean_los_days, daily_surcharge</data>
+    </node>
+
+    <node id="procedure_catalog">
+      <data key="d0">procedure_catalog</data>
+      <data key="d1">code (PK), name, category</data>
+    </node>
+
+    <node id="drug">
+      <data key="d0">drug</data>
+      <data key="d1">id (PK), product_name, ema_product_no, authorisation_no, authorisation_status</data>
+    </node>
+
+    <node id="active_substance">
+      <data key="d0">active_substance</data>
+      <data key="d1">id (PK), name</data>
+    </node>
+
+    <node id="drug_active_substance">
+      <data key="d0">drug_active_substance</data>
+      <data key="d1">drug_id (FK), substance_id (FK)</data>
+    </node>
+
+    <node id="patient">
+      <data key="d0">patient</data>
+      <data key="d1">amka (PK), first_name, last_name, fathers_name, birth_date, gender, insurance</data>
+    </node>
+
+    <node id="patient_allergy">
+      <data key="d0">patient_allergy</data>
+      <data key="d1">patient_amka (FK), substance_id (FK), notes</data>
+    </node>
+
+    <node id="staff">
+      <data key="d0">staff</data>
+      <data key="d1">amka (PK), first_name, last_name, birth_date, hire_date, staff_type</data>
+    </node>
+
+    <node id="department">
+      <data key="d0">department</data>
+      <data key="d1">id (PK), name, description, bed_count, floor_building, director_amka (FK)</data>
+    </node>
+
+    <node id="doctor">
+      <data key="d0">doctor</data>
+      <data key="d1">amka (PK/FK), license_no, specialty, rank, supervisor_amka (FK)</data>
+    </node>
+
+    <node id="doctor_department">
+      <data key="d0">doctor_department</data>
+      <data key="d1">doctor_amka (FK), department_id (FK)</data>
+    </node>
+
+    <node id="nurse">
+      <data key="d0">nurse</data>
+      <data key="d1">amka (PK/FK), rank, department_id (FK)</data>
+    </node>
+
+    <node id="admin_staff">
+      <data key="d0">admin_staff</data>
+      <data key="d1">amka (PK/FK), role, office, department_id (FK)</data>
+    </node>
+
+    <node id="bed">
+      <data key="d0">bed</data>
+      <data key="d1">id (PK), bed_number, department_id (FK), bed_type, status</data>
+    </node>
+
+    <node id="shift">
+      <data key="d0">shift</data>
+      <data key="d1">id (PK), department_id (FK), shift_date, shift_type</data>
+    </node>
+
+    <node id="shift_assignment">
+      <data key="d0">shift_assignment</data>
+      <data key="d1">id (PK), shift_id (FK), staff_amka (FK)</data>
+    </node>
+
+    <node id="triage">
+      <data key="d0">triage</data>
+      <data key="d1">id (PK), patient_amka (FK), nurse_amka (FK), arrival_time, urgency_level</data>
+    </node>
+
+    <node id="hospitalization">
+      <data key="d0">hospitalization</data>
+      <data key="d1">id (PK), patient_amka (FK), bed_id (FK), department_id (FK), triage_id (FK), admission_icd10 (FK), discharge_icd10 (FK), ken_code (FK)</data>
+    </node>
+
+    <node id="lab_test">
+      <data key="d0">lab_test</data>
+      <data key="d1">id (PK), hospitalization_id (FK), ordering_doctor_amka (FK)</data>
+    </node>
+
+    <node id="operating_room">
+      <data key="d0">operating_room</data>
+      <data key="d1">id (PK), name, room_type, department_id (FK)</data>
+    </node>
+
+    <node id="medical_procedure">
+      <data key="d0">medical_procedure</data>
+      <data key="d1">id (PK), catalog_code (FK), hospitalization_id (FK), operating_room_id (FK), primary_surgeon_amka (FK)</data>
+    </node>
+
+    <node id="procedure_staff">
+      <data key="d0">procedure_staff</data>
+      <data key="d1">procedure_id (FK), staff_amka (FK), role</data>
+    </node>
+
+    <node id="prescription">
+      <data key="d0">prescription</data>
+      <data key="d1">id (PK), hospitalization_id (FK), doctor_amka (FK), patient_amka (FK), drug_id (FK)</data>
+    </node>
+
+    <node id="patient_review_hospitalization">
+      <data key="d0">patient_review_hospitalization</data>
+      <data key="d1">id (PK), hospitalization_id (FK), patient_amka (FK)</data>
+    </node>
+
+    <node id="patient_review_doctor">
+      <data key="d0">patient_review_doctor</data>
+      <data key="d1">id (PK), hospitalization_id (FK), patient_amka (FK), doctor_amka (FK)</data>
+    </node>
+
+    <node id="entity_image">
+      <data key="d0">entity_image</data>
+      <data key="d1">id (PK), entity_type, entity_id, image_url</data>
+    </node>
+
+    <!-- ===================================================== -->
+    <!-- RELATIONSHIPS -->
+    <!-- ===================================================== -->
+
+    <edge source="drug_active_substance" target="drug">
+      <data key="d2">drug_id → drug.id</data>
+    </edge>
+
+    <edge source="drug_active_substance" target="active_substance">
+      <data key="d2">substance_id → active_substance.id</data>
+    </edge>
+
+    <edge source="patient_allergy" target="patient">
+      <data key="d2">patient_amka → patient.amka</data>
+    </edge>
+
+    <edge source="patient_allergy" target="active_substance">
+      <data key="d2">substance_id → active_substance.id</data>
+    </edge>
+
+    <edge source="doctor" target="staff">
+      <data key="d2">amka → staff.amka</data>
+    </edge>
+
+    <edge source="doctor" target="doctor">
+      <data key="d2">supervisor_amka → doctor.amka</data>
+    </edge>
+
+    <edge source="department" target="doctor">
+      <data key="d2">director_amka → doctor.amka</data>
+    </edge>
+
+    <edge source="doctor_department" target="doctor">
+      <data key="d2">doctor_amka → doctor.amka</data>
+    </edge>
+
+    <edge source="doctor_department" target="department">
+      <data key="d2">department_id → department.id</data>
+    </edge>
+
+    <edge source="nurse" target="staff">
+      <data key="d2">amka → staff.amka</data>
+    </edge>
+
+    <edge source="nurse" target="department">
+      <data key="d2">department_id → department.id</data>
+    </edge>
+
+    <edge source="admin_staff" target="staff">
+      <data key="d2">amka → staff.amka</data>
+    </edge>
+
+    <edge source="admin_staff" target="department">
+      <data key="d2">department_id → department.id</data>
+    </edge>
+
+    <edge source="bed" target="department">
+      <data key="d2">department_id → department.id</data>
+    </edge>
+
+    <edge source="shift" target="department">
+      <data key="d2">department_id → department.id</data>
+    </edge>
+
+    <edge source="shift_assignment" target="shift">
+      <data key="d2">shift_id → shift.id</data>
+    </edge>
+
+    <edge source="shift_assignment" target="staff">
+      <data key="d2">staff_amka → staff.amka</data>
+    </edge>
+
+    <edge source="triage" target="patient">
+      <data key="d2">patient_amka → patient.amka</data>
+    </edge>
+
+    <edge source="triage" target="nurse">
+      <data key="d2">nurse_amka → nurse.amka</data>
+    </edge>
+
+    <edge source="hospitalization" target="patient">
+      <data key="d2">patient_amka → patient.amka</data>
+    </edge>
+
+    <edge source="hospitalization" target="bed">
+      <data key="d2">bed_id → bed.id</data>
+    </edge>
+
+    <edge source="hospitalization" target="department">
+      <data key="d2">department_id → department.id</data>
+    </edge>
+
+    <edge source="hospitalization" target="triage">
+      <data key="d2">triage_id → triage.id</data>
+    </edge>
+
+    <edge source="hospitalization" target="icd10_code">
+      <data key="d2">admission_icd10 → icd10_code.code</data>
+    </edge>
+
+    <edge source="hospitalization" target="icd10_code">
+      <data key="d2">discharge_icd10 → icd10_code.code</data>
+    </edge>
+
+    <edge source="hospitalization" target="ken_code">
+      <data key="d2">ken_code → ken_code.code</data>
+    </edge>
+
+    <edge source="lab_test" target="hospitalization">
+      <data key="d2">hospitalization_id → hospitalization.id</data>
+    </edge>
+
+    <edge source="lab_test" target="doctor">
+      <data key="d2">ordering_doctor_amka → doctor.amka</data>
+    </edge>
+
+    <edge source="operating_room" target="department">
+      <data key="d2">department_id → department.id</data>
+    </edge>
+
+    <edge source="medical_procedure" target="procedure_catalog">
+      <data key="d2">catalog_code → procedure_catalog.code</data>
+    </edge>
+
+    <edge source="medical_procedure" target="hospitalization">
+      <data key="d2">hospitalization_id → hospitalization.id</data>
+    </edge>
+
+    <edge source="medical_procedure" target="operating_room">
+      <data key="d2">operating_room_id → operating_room.id</data>
+    </edge>
+
+    <edge source="medical_procedure" target="doctor">
+      <data key="d2">primary_surgeon_amka → doctor.amka</data>
+    </edge>
+
+    <edge source="procedure_staff" target="medical_procedure">
+      <data key="d2">procedure_id → medical_procedure.id</data>
+    </edge>
+
+    <edge source="procedure_staff" target="staff">
+      <data key="d2">staff_amka → staff.amka</data>
+    </edge>
+
+    <edge source="prescription" target="hospitalization">
+      <data key="d2">hospitalization_id → hospitalization.id</data>
+    </edge>
+
+    <edge source="prescription" target="doctor">
+      <data key="d2">doctor_amka → doctor.amka</data>
+    </edge>
+
+    <edge source="prescription" target="patient">
+      <data key="d2">patient_amka → patient.amka</data>
+    </edge>
+
+    <edge source="prescription" target="drug">
+      <data key="d2">drug_id → drug.id</data>
+    </edge>
+
+    <edge source="patient_review_hospitalization" target="hospitalization">
+      <data key="d2">hospitalization_id → hospitalization.id</data>
+    </edge>
+
+    <edge source="patient_review_hospitalization" target="patient">
+      <data key="d2">patient_amka → patient.amka</data>
+    </edge>
+
+    <edge source="patient_review_doctor" target="hospitalization">
+      <data key="d2">hospitalization_id → hospitalization.id</data>
+    </edge>
+
+    <edge source="patient_review_doctor" target="patient">
+      <data key="d2">patient_amka → patient.amka</data>
+    </edge>
+
+    <edge source="patient_review_doctor" target="doctor">
+      <data key="d2">doctor_amka → doctor.amka</data>
+    </edge>
+
+  </graph>
+</graphml>
