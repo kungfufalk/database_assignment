@@ -2,6 +2,7 @@
 -- Ygeiopolis General Hospital - Database Schema
 -- install.sql
 -- ============================================================
+USE ygeiopolis;
 
 SET FOREIGN_KEY_CHECKS = 0;
 SET SQL_MODE = 'STRICT_TRANS_TABLES,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO';
@@ -9,6 +10,8 @@ SET SQL_MODE = 'STRICT_TRANS_TABLES,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVIS
 -- ============================================================
 -- DROP TABLES (reverse dependency order)
 -- ============================================================
+SET FOREIGN_KEY_CHECKS = 0;
+
 DROP TABLE IF EXISTS entity_image;
 DROP TABLE IF EXISTS patient_review_doctor;
 DROP TABLE IF EXISTS patient_review_hospitalization;
@@ -23,6 +26,7 @@ DROP TABLE IF EXISTS operating_room;
 DROP TABLE IF EXISTS lab_test;
 DROP TABLE IF EXISTS hospitalization;
 DROP TABLE IF EXISTS triage;
+DROP TABLE IF EXISTS procedure_catalog;
 DROP TABLE IF EXISTS ken_code;
 DROP TABLE IF EXISTS icd10_code;
 DROP TABLE IF EXISTS shift_assignment;
@@ -36,8 +40,6 @@ DROP TABLE IF EXISTS doctor;
 DROP TABLE IF EXISTS staff;
 DROP TABLE IF EXISTS patient;
 
-SET FOREIGN_KEY_CHECKS = 1;
-
 -- ============================================================
 -- REFERENCE DATA TABLES
 -- ============================================================
@@ -45,11 +47,9 @@ SET FOREIGN_KEY_CHECKS = 1;
 CREATE TABLE icd10_code (
     code        VARCHAR(10)  NOT NULL,
     description VARCHAR(255) NOT NULL,
-    category    VARCHAR(10)  NOT NULL,  -- e.g. 'A00', 'I21'
     CONSTRAINT pk_icd10 PRIMARY KEY (code)
 );
 
-CREATE INDEX idx_icd10_category ON icd10_code (category);
 
 -- ---------------------------------------------------------------
 -- KEN (DRG) codes — Κλειστά Ενοποιημένα Νοσήλια
@@ -59,7 +59,6 @@ CREATE TABLE ken_code (
     description     VARCHAR(255)   NOT NULL,
     base_cost       DECIMAL(10,2)  NOT NULL CHECK (base_cost >= 0),
     mean_los_days   DECIMAL(6,2)   NOT NULL CHECK (mean_los_days > 0),  -- Mean Length of Stay
-    daily_surcharge DECIMAL(10,2)  NOT NULL CHECK (daily_surcharge >= 0),
     CONSTRAINT pk_ken PRIMARY KEY (code)
 );
 
@@ -67,33 +66,53 @@ CREATE TABLE ken_code (
 -- EMA Article 57 drugs
 -- ---------------------------------------------------------------
 CREATE TABLE drug (
-    id              INT            NOT NULL AUTO_INCREMENT,
-    product_name    VARCHAR(255)   NOT NULL,
-    ema_product_no  VARCHAR(100),
-    authorisation_no VARCHAR(100),
-    authorisation_status VARCHAR(50),
-    CONSTRAINT pk_drug PRIMARY KEY (id),
-    CONSTRAINT uq_drug_ema UNIQUE (ema_product_no)
+    id                                      INT            NOT NULL AUTO_INCREMENT,
+    product_name                            VARCHAR(255)   NOT NULL,
+    route_of_administration                 VARCHAR(255),
+    product_authorisation_country           VARCHAR(100),
+    marketing_authorisation_holder          VARCHAR(255),
+    pharmacovigilance_master_file_location  VARCHAR(255),
+    pharmacovigilance_email                 VARCHAR(255),
+    pharmacovigilance_phone                 VARCHAR(100),
+
+    CONSTRAINT pk_drug PRIMARY KEY (id)
 );
 
-CREATE INDEX idx_drug_name ON drug (product_name);
+CREATE INDEX idx_drug_name 
+    ON drug (product_name);
+
+CREATE INDEX idx_drug_country 
+    ON drug (product_authorisation_country);
 
 CREATE TABLE active_substance (
-    id      INT          NOT NULL AUTO_INCREMENT,
-    name    VARCHAR(255) NOT NULL,
+    id      INT            NOT NULL AUTO_INCREMENT,
+    name    VARCHAR(255)   NOT NULL,
+
     CONSTRAINT pk_active_substance PRIMARY KEY (id),
     CONSTRAINT uq_active_substance_name UNIQUE (name)
 );
 
-CREATE INDEX idx_substance_name ON active_substance (name);
 
 CREATE TABLE drug_active_substance (
-    drug_id      INT NOT NULL,
-    substance_id INT NOT NULL,
-    CONSTRAINT pk_drug_substance PRIMARY KEY (drug_id, substance_id),
-    CONSTRAINT fk_das_drug      FOREIGN KEY (drug_id)      REFERENCES drug (id)             ON DELETE CASCADE,
-    CONSTRAINT fk_das_substance FOREIGN KEY (substance_id) REFERENCES active_substance (id) ON DELETE CASCADE
+    drug_id        INT NOT NULL,
+    substance_id   INT NOT NULL,
+
+    CONSTRAINT pk_drug_substance 
+        PRIMARY KEY (drug_id, substance_id),
+
+    CONSTRAINT fk_das_drug
+        FOREIGN KEY (drug_id)
+        REFERENCES drug (id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_das_substance
+        FOREIGN KEY (substance_id)
+        REFERENCES active_substance (id)
+        ON DELETE CASCADE
 );
+
+CREATE INDEX idx_das_substance 
+    ON drug_active_substance (substance_id);
 
 -- ============================================================
 -- PATIENT
@@ -121,7 +140,7 @@ CREATE TABLE patient (
 );
 
 CREATE INDEX idx_patient_name ON patient (last_name, first_name);
-CREATE INDEX idx_patient_insurance ON patient (insurance);
+
 
 CREATE TABLE patient_allergy (
     patient_amka VARCHAR(11) NOT NULL,
@@ -148,8 +167,6 @@ CREATE TABLE staff (
     staff_type  VARCHAR(20)  NOT NULL CHECK (staff_type IN ('doctor', 'nurse', 'admin')),
     CONSTRAINT pk_staff PRIMARY KEY (amka)
 );
-
-CREATE INDEX idx_staff_type ON staff (staff_type);
 CREATE INDEX idx_staff_name ON staff (last_name, first_name);
 
 -- ============================================================
@@ -178,15 +195,12 @@ CREATE TABLE doctor (
     CONSTRAINT pk_doctor            PRIMARY KEY (amka),
     CONSTRAINT fk_doctor_staff      FOREIGN KEY (amka)            REFERENCES staff (amka)  ON DELETE CASCADE,
     CONSTRAINT fk_doctor_supervisor FOREIGN KEY (supervisor_amka) REFERENCES doctor (amka) ON DELETE SET NULL,
-    CONSTRAINT uq_doctor_license    UNIQUE (license_no),
-    -- Residents must have a supervisor; Directors must NOT
-    -- (enforced via trigger below; CHECK can't reference other rows)
-    CONSTRAINT chk_director_no_supervisor
-        CHECK (NOT (rank = 'Director' AND supervisor_amka IS NOT NULL))
+    CONSTRAINT uq_doctor_license    UNIQUE (license_no)
 );
+-- Residents must have a supervisor; Directors must NOT
+-- (enforced via triggers below)
 
 CREATE INDEX idx_doctor_specialty  ON doctor (specialty);
-CREATE INDEX idx_doctor_rank       ON doctor (rank);
 CREATE INDEX idx_doctor_supervisor ON doctor (supervisor_amka);
 
 -- Now add FK from department to doctor
@@ -215,7 +229,7 @@ CREATE TABLE nurse (
 );
 
 CREATE INDEX idx_nurse_dept ON nurse (department_id);
-CREATE INDEX idx_nurse_rank ON nurse (rank);
+
 
 -- ============================================================
 -- ADMIN STAFF
@@ -231,7 +245,7 @@ CREATE TABLE admin_staff (
 );
 
 CREATE INDEX idx_admin_dept ON admin_staff (department_id);
-CREATE INDEX idx_admin_role ON admin_staff (role);
+
 
 -- ============================================================
 -- BED
@@ -301,7 +315,6 @@ CREATE TABLE triage (
 );
 
 CREATE INDEX idx_triage_patient  ON triage (patient_amka);
-CREATE INDEX idx_triage_urgency  ON triage (urgency_level);
 CREATE INDEX idx_triage_arrival  ON triage (arrival_time);
 
 -- ============================================================
@@ -318,9 +331,6 @@ CREATE TABLE hospitalization (
     admission_icd10     VARCHAR(10)   NOT NULL,
     discharge_icd10     VARCHAR(10)   DEFAULT NULL,
     ken_code            VARCHAR(10)   NOT NULL,
-    base_cost           DECIMAL(10,2) NOT NULL CHECK (base_cost >= 0),
-    surcharge           DECIMAL(10,2) NOT NULL DEFAULT 0 CHECK (surcharge >= 0),
-    total_cost          DECIMAL(10,2) GENERATED ALWAYS AS (base_cost + surcharge) STORED,
     CONSTRAINT pk_hospitalization     PRIMARY KEY (id),
     CONSTRAINT fk_hosp_patient        FOREIGN KEY (patient_amka)    REFERENCES patient      (amka) ON DELETE RESTRICT,
     CONSTRAINT fk_hosp_bed            FOREIGN KEY (bed_id)          REFERENCES bed          (id)   ON DELETE RESTRICT,
@@ -378,28 +388,34 @@ CREATE TABLE operating_room (
 -- ============================================================
 -- MEDICAL PROCEDURE
 -- ============================================================
+-- Reference table (loaded once from the MoH file)
+CREATE TABLE procedure_catalog (
+    code        VARCHAR(50)  NOT NULL,
+    name        VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_procedure_catalog PRIMARY KEY (code)
+);
+
+-- Instance table (one row per actual procedure performed on a patient)
 CREATE TABLE medical_procedure (
-    id                  INT           NOT NULL AUTO_INCREMENT,
-    hospitalization_id  INT           NOT NULL,
-    code                VARCHAR(50)   NOT NULL,
-    name                VARCHAR(255)  NOT NULL,
-    category            VARCHAR(30)   NOT NULL CHECK (category IN ('Surgical', 'Diagnostic', 'Therapeutic')),
-    start_datetime      DATETIME      NOT NULL,
-    duration_minutes    INT           NOT NULL CHECK (duration_minutes > 0),
-    cost                DECIMAL(10,2) NOT NULL CHECK (cost >= 0),
-    operating_room_id   INT           NOT NULL,
-    primary_surgeon_amka CHAR(11)     NOT NULL,
-    CONSTRAINT pk_procedure       PRIMARY KEY (id),
-    CONSTRAINT fk_proc_hosp       FOREIGN KEY (hospitalization_id)  REFERENCES hospitalization (id)   ON DELETE CASCADE,
-    CONSTRAINT fk_proc_room       FOREIGN KEY (operating_room_id)   REFERENCES operating_room  (id)   ON DELETE RESTRICT,
-    CONSTRAINT fk_proc_surgeon    FOREIGN KEY (primary_surgeon_amka) REFERENCES doctor          (amka) ON DELETE RESTRICT
+    id                   INT           NOT NULL AUTO_INCREMENT,
+    catalog_code         VARCHAR(50)   NOT NULL,   -- FK to procedure_catalog
+    hospitalization_id   INT           NOT NULL,
+    start_datetime       DATETIME      NOT NULL,
+    duration_minutes     INT           NOT NULL CHECK (duration_minutes > 0),
+    cost                 DECIMAL(10,2) NOT NULL CHECK (cost >= 0),
+    operating_room_id    INT           NOT NULL,
+    primary_surgeon_amka CHAR(11)      NOT NULL,
+    CONSTRAINT pk_medical_procedure  PRIMARY KEY (id),
+    CONSTRAINT fk_proc_catalog       FOREIGN KEY (catalog_code)         REFERENCES procedure_catalog (code),
+    CONSTRAINT fk_proc_hosp          FOREIGN KEY (hospitalization_id)   REFERENCES hospitalization   (id),
+    CONSTRAINT fk_proc_room          FOREIGN KEY (operating_room_id)    REFERENCES operating_room    (id),
+    CONSTRAINT fk_proc_surgeon       FOREIGN KEY (primary_surgeon_amka) REFERENCES doctor            (amka)
 );
 
 CREATE INDEX idx_proc_hosp     ON medical_procedure (hospitalization_id);
 CREATE INDEX idx_proc_surgeon  ON medical_procedure (primary_surgeon_amka);
 CREATE INDEX idx_proc_room     ON medical_procedure (operating_room_id);
 CREATE INDEX idx_proc_start    ON medical_procedure (start_datetime);
-CREATE INDEX idx_proc_category ON medical_procedure (category);
 
 -- Procedure assistants (doctors or nurses)
 CREATE TABLE procedure_staff (
@@ -493,6 +509,11 @@ CREATE TABLE entity_image (
 );
 
 CREATE INDEX idx_image_entity ON entity_image (entity_type, entity_id);
+
+-- ============================================================
+-- Re-enable foreign key checks
+-- ============================================================
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- ============================================================
 -- TRIGGERS
